@@ -26,20 +26,22 @@ export const site = {
     /** Número de WhatsApp con código de país, solo dígitos. Ej: 51987654321 */
     whatsapp: "[TU NÚMERO]",
     /** Mensaje que aparece escrito al abrir WhatsApp. */
-    whatsappMessage: `Hola, vi la web de ${name} y quiero agendar el diagnóstico gratuito de 30 minutos para mi empresa.`,
+    whatsappMessage: `Hola, vi la web de ${name} y quiero agendar la llamada de 30 minutos para descubrir qué automatizar primero.`,
     /**
      * Enlace de tu evento de Calendly (ej. https://calendly.com/tu-usuario/diagnostico-30-min).
-     * Si lo dejas vacío, la sección de agenda muestra solo WhatsApp y correo.
+     * Si lo dejas vacío, la sección final muestra solo el formulario, WhatsApp y correo.
      */
     calendlyUrl: "",
   },
 
   seo: {
-    title: `${name} | Transformación operativa para PYMES en Lima`,
+    title: `${name} | Automatización y procesos conectados para empresas en crecimiento`,
     description:
-      "Conectamos ventas, inventario, compras y finanzas con las herramientas que ya usas para eliminar trabajo manual. Agenda un diagnóstico gratuito de 30 min.",
+      "Automatizamos y conectamos ventas, inventario, compras y finanzas con las herramientas que ya usas. Descubre en 30 minutos qué automatizar primero.",
     /** Texto corto que acompaña al nombre en la imagen para compartir (og-image.png). */
     ogTagline: "Tu empresa corre en Excel y WhatsApp. Hagamos que corra sola.",
+    /** Línea inferior de la imagen para compartir. */
+    ogFooter: "Digitalización operativa para empresas en crecimiento, Lima",
   },
 
   /**
@@ -56,12 +58,17 @@ export const site = {
   /* ------------------------------------------------------------------ */
 
   cta: {
-    primary: "Agendar diagnóstico",
-    primaryLong: "Agendar diagnóstico gratuito",
+    /** Botón corto del header (debe caber en celular). */
+    header: "Agendar 30 min",
+    /** Botón principal en el resto de la página: orientado al beneficio. */
+    primary: "Descubre qué automatizar primero",
+    /** Línea bajo los botones principales. */
+    note: "30 min · Gratis · Sin compromiso",
   },
 
   nav: [
     { label: "Problemas", href: "#problemas" },
+    { label: "Qué hacemos", href: "#que-hacemos" },
     { label: "Cómo trabajamos", href: "#como-trabajamos" },
     { label: "Para quién", href: "#para-quien" },
   ],
@@ -69,22 +76,17 @@ export const site = {
   hero: {
     title: "Tu empresa corre en Excel y WhatsApp. Hagamos que corra sola.",
     subtitle:
-      "Analizamos cómo opera tu empresa hoy y conectamos ventas, inventario, compras y finanzas con las herramientas que ya tienes o que de verdad necesitas. Menos trabajo manual, más control.",
-    secondary: "Ver cómo trabajamos",
-    /** Puntos de confianza bajo los botones. Solo hechos verificables. */
-    trust: ["30 minutos, sin costo ni compromiso", "No vendemos software ni licencias", "Para empresas de 10 a 100 personas"],
-    flowToday: ["Ventas", "WhatsApp", "Excel", "Almacén", "Contador"],
-    flowIntegrated: ["Cotización", "Pedido", "Inventario", "Despacho", "Facturación"],
+      "Automatizamos y conectamos tus procesos de ventas, inventario, compras y finanzas, para que la información fluya sola y tú tengas el control.",
+    secondary: "Ver qué automatizamos",
   },
 
   problems: {
-    title: "¿Cuáles de estos pasan en tu empresa?",
+    title: "¿Tu empresa también funciona así?",
     intro:
       "Marca los que reconozcas. Ninguno se arregla contratando más gente para pasar datos de un lado a otro.",
     /** Mensajes del contador del checklist. {n} se reemplaza por la cantidad marcada. */
-    counterEmpty: "Marca los que te pasen para ver si el diagnóstico te sirve.",
-    counterSome: "Marcaste {n} de 6. Justo eso es lo que revisamos en el diagnóstico gratuito.",
-    counterCta: "Revisarlo en 30 minutos",
+    counterEmpty: "Marca los que te pasen y te decimos por dónde empezar.",
+    counterSome: "Marcaste {n} de 6. Eso es justo lo que revisamos en la llamada de 30 minutos.",
     items: [
       {
         icon: "boxes",
@@ -119,10 +121,43 @@ export const site = {
     ],
   },
 
+  /** Antes → Después: el flujo actual frente al flujo conectado. */
+  beforeAfter: {
+    title: "Así cambia tu operación",
+    intro: "Hoy la información salta de persona en persona y de archivo en archivo. Después, cada paso alimenta al siguiente.",
+    before: {
+      label: "Antes",
+      flow: ["Excel", "WhatsApp", "Vendedor", "Almacén", "Contador", "Excel"],
+      points: ["Información duplicada", "Errores al copiar datos", "Trabajo manual", "Información atrasada"],
+    },
+    after: {
+      label: "Después",
+      flow: ["Cliente", "Venta", "Inventario", "Despacho", "Facturación", "Dashboard"],
+      points: ["Información conectada", "Tareas automatizadas", "Trazabilidad de cada pedido", "Indicadores en tiempo real"],
+    },
+  },
+
+  /** Qué podemos automatizar, por área. */
+  services: {
+    title: "Convertimos procesos manuales en operaciones digitales",
+    intro: "Algunos de los procesos que automatizamos y conectamos:",
+    areas: [
+      { icon: "tag", title: "Ventas", items: ["Cotizaciones automáticas", "Seguimiento de oportunidades", "Pedidos desde WhatsApp"] },
+      { icon: "boxes", title: "Inventario", items: ["Stock en tiempo real", "Alertas de reposición", "Inventario por almacén"] },
+      { icon: "cart", title: "Compras", items: ["Solicitudes de compra", "Aprobaciones", "Seguimiento de proveedores"] },
+      { icon: "wallet", title: "Finanzas", items: ["Cobranzas", "Conciliaciones", "Reportes financieros"] },
+      { icon: "chart", title: "Datos", items: ["Dashboards en Power BI", "KPIs", "Reportes automáticos"] },
+      {
+        icon: "cpu",
+        title: "IA",
+        items: ["Clasificación de documentos", "Asistentes internos", "Análisis de información", "Automatización de tareas"],
+      },
+    ],
+  },
+
   process: {
-    title: "Cómo trabajamos",
-    intro:
-      "No vendemos software. Trabajamos con lo que ya tienes y solo agregamos herramientas cuando el ahorro lo justifica.",
+    title: "Cómo lo hacemos",
+    intro: "Trabajamos con lo que ya tienes y solo agregamos herramientas cuando el ahorro lo justifica.",
     steps: [
       {
         title: "Diagnóstico",
@@ -130,49 +165,100 @@ export const site = {
         result: "Mapa de tu operación y lista priorizada de mejoras.",
       },
       {
-        title: "Automatización puntual",
+        title: "Primera automatización",
         text: "Empezamos por el proceso que más duele y que se resuelve más rápido. Ves resultados antes de comprometer un proyecto grande.",
         result: "Un proceso funcionando sin trabajo manual.",
       },
       {
-        title: "Operación integrada",
+        title: "Integración",
         text: "Conectamos ERP, CRM, WhatsApp Business, Power BI y automatizaciones para que la información pase de un área a otra sin copiar y pegar.",
         result: "Ventas, inventario, compras y finanzas en un mismo flujo.",
       },
       {
-        title: "Acompañamiento mensual",
+        title: "Mejora continua",
         text: "Ajustamos lo que cambia en tu negocio, capacitamos a tu equipo y medimos el impacto. Tú decides si continuar cada mes.",
-        result: "Soporte, mejoras continuas e indicadores al día.",
+        result: "Soporte, mejoras e indicadores al día.",
       },
     ],
   },
 
+  /** Por qué nosotros + tecnologías. */
+  why: {
+    title: "Por qué trabajar con nosotros",
+    cards: [
+      {
+        icon: "target",
+        title: "Enfocados en resultados",
+        text: "No automatizamos por automatizar. Priorizamos los procesos con impacto económico.",
+      },
+      {
+        icon: "plug",
+        title: "Independientes de tecnología",
+        text: "Elegimos la herramienta según el problema, no al revés.",
+      },
+      {
+        icon: "flag",
+        title: "Empezamos pequeño",
+        text: "Primero demostramos valor con una mejora puntual.",
+      },
+      {
+        icon: "coins",
+        title: "Medimos el retorno",
+        text: "Cada proyecto tiene indicadores, ahorro estimado y periodo de recuperación.",
+      },
+    ],
+    techTitle: "La tecnología se adapta a tu negocio. No al revés.",
+    techText:
+      "No estamos casados con ninguna tecnología. Trabajamos con el ERP, CRM y herramientas que ya tienes. Si necesitas algo nuevo, elegimos la solución que tenga más sentido para tu operación.",
+    /** Herramientas con las que trabajas. Se muestran como nombres, sin logos. */
+    tech: ["Odoo", "Power BI", "Power Automate", "n8n", "HubSpot", "WhatsApp Business", "APIs", "IA"],
+  },
+
+  roi: {
+    title: "No te vendemos horas. Te mostramos cuánto puedes ahorrar.",
+    text: "Cada propuesta llega con el ahorro estimado y el tiempo de recuperación de cada mejora, antes de que inviertas un sol. Si los números no cierran, te lo decimos.",
+    docTitle: "Así calculamos tu retorno",
+    docLabel: "Ejemplo ilustrativo",
+    /** Supuestos del ejemplo, visibles para que el cálculo sea transparente. */
+    assumptions: "Empresa ficticia de 40 personas. Costo por hora de trabajo: S/ 25.",
+    formulas: ["Ahorro mensual = horas liberadas × costo por hora", "Recuperación = inversión ÷ ahorro mensual"],
+    caption:
+      "Ejemplo con cifras ilustrativas para mostrar el método: no corresponde a un cliente real. En tu propuesta, los valores salen de los datos de tu empresa.",
+    totalLabel: "Total",
+    columns: ["Proceso", "Horas al mes hoy", "Horas al mes después", "Ahorro mensual", "Inversión", "Recuperación"],
+    rows: [
+      ["Armado de cotizaciones", "60 h", "12 h", "S/ 1,200", "S/ 4,800", "4 meses"],
+      ["Registro de pedidos de WhatsApp", "80 h", "20 h", "S/ 1,500", "S/ 7,500", "5 meses"],
+      ["Reporte semanal de ventas", "24 h", "2 h", "S/ 550", "S/ 1,650", "3 meses"],
+      ["Seguimiento de cobranzas", "40 h", "12 h", "S/ 700", "S/ 4,200", "6 meses"],
+    ],
+    total: ["204 h", "46 h", "S/ 3,950", "S/ 18,150", "≈ 5 meses"],
+  },
+
   audience: {
     title: "Para quién es",
-    size: "De 10 a 100 personas",
-    sizeText:
-      "Empresas que ya crecieron lo suficiente para que el desorden cueste dinero, pero que todavía dependen de que pocas personas sepan dónde está cada cosa.",
+    headline: "Para empresas que ya crecieron, pero todavía operan con Excel, WhatsApp y procesos desconectados.",
+    sub: "Especialmente importadoras, distribuidoras, empresas industriales y servicios B2B.",
     notForTitle: "Probablemente no somos para ti si…",
     notFor: [
       "Buscas comprar un software y que alguien lo instale, sin revisar cómo trabajan.",
       "Tu equipo es de menos de 10 personas y todo pasa por una sola persona.",
       "Necesitas un desarrollo a medida desde cero.",
     ],
-    sectorsTitle: "Rubros con los que trabajamos",
     sectors: [
-      {
-        icon: "truck",
-        title: "Distribuidoras",
-        text: "Pedidos de muchos clientes, rutas de despacho, stock en movimiento y cobranza a crédito.",
-      },
       {
         icon: "ship",
         title: "Importadoras",
         text: "Costeo de importaciones, seguimiento de contenedores, listas de precios y stock por llegar.",
       },
       {
+        icon: "truck",
+        title: "Distribuidoras",
+        text: "Pedidos de muchos clientes, rutas de despacho, stock en movimiento y cobranza a crédito.",
+      },
+      {
         icon: "factory",
-        title: "Industria pequeña y mediana",
+        title: "Empresas industriales",
         text: "Órdenes de producción, consumo de insumos, compras a proveedores y costos reales por producto.",
       },
       {
@@ -183,76 +269,21 @@ export const site = {
     ],
   },
 
-  roi: {
-    title: "Cada propuesta llega con el ahorro estimado y el tiempo de recuperación",
-    text: "Antes de que inviertas un sol, te mostramos cuántas horas y cuánto dinero libera cada mejora, y en cuántos meses se paga. Si los números no cierran, te lo decimos.",
-    docTitle: "Propuesta de mejora operativa",
-    docLabel: "Ejemplo de formato",
-    caption: "Así se ve la propuesta que recibes. Los valores se calculan con los datos reales de tu empresa.",
-    totalLabel: "Total",
-    total: ["[X h]", "[X h]", "S/ [X]", "S/ [X]", "[X] meses"],
-    columns: ["Proceso", "Horas al mes hoy", "Horas al mes después", "Ahorro mensual", "Inversión", "Recuperación"],
-    rows: [
-      ["Armado de cotizaciones", "[X h]", "[X h]", "S/ [X]", "S/ [X]", "[X] meses"],
-      ["Registro de pedidos de WhatsApp", "[X h]", "[X h]", "S/ [X]", "S/ [X]", "[X] meses"],
-      ["Reporte semanal de ventas", "[X h]", "[X h]", "S/ [X]", "S/ [X]", "[X] meses"],
-      ["Seguimiento de cobranzas", "[X h]", "[X h]", "S/ [X]", "S/ [X]", "[X] meses"],
-    ],
-  },
-
-  booking: {
-    title: "Agenda tu diagnóstico gratuito de 30 minutos",
-    text: "Una conversación directa sobre cómo opera tu empresa hoy. Sales con una idea clara de qué automatizar primero, aunque no trabajemos juntos.",
-    agendaTitle: "Qué pasa en esos 30 minutos",
-    agenda: [
-      { time: "Min 0–10", text: "Nos cuentas cómo fluyen hoy ventas, inventario, compras y finanzas." },
-      { time: "Min 10–25", text: "Identificamos las dos o tres tareas manuales que más te cuestan." },
-      { time: "Min 25–30", text: "Te decimos qué automatizar primero y si podemos ayudarte. Sin presión de venta." },
-    ],
-    whatsappLabel: "Escríbenos por WhatsApp",
-    emailLabel: "¿Prefieres correo? Escríbenos a",
-    /** Tarjeta de contacto que se muestra cuando no hay enlace de Calendly. */
-    contactTitle: "Coordina tu diagnóstico",
-    contactText: "Escríbenos con el nombre de tu empresa y el mejor horario para ti. Te respondemos para confirmar la fecha.",
-    calendarLoading: "Cargando calendario…",
-    calendarFallback: "Abrir el calendario en una pestaña nueva",
-  },
-  /** Quién te atiende. Una consultoría se elige por las personas: completa con datos reales. */
+  /** Quién está detrás. */
   team: {
-    title: "Quién te atiende",
-    intro: "Hablas directamente con quien va a analizar tu operación, no con un vendedor.",
+    title: "Quién está detrás",
     people: [
       {
-        name: "[TU NOMBRE]",
-        role: "[TU CARGO], fundador de Operia",
-        /** Ruta de la foto dentro de public/, ej. "/equipo/nombre.jpg" (cuadrada, mín. 400×400). Vacío = marcador. */
+        name: "Erick Villanueva",
+        role: "Fundador · Ingeniero Mecánico + MBA",
+        /** Ruta de la foto dentro de public/, ej. "/equipo/erick-villanueva.jpg" (cuadrada, mín. 600×600). Vacío = marcador. */
         photo: "",
-        bio: "[2–3 LÍNEAS SOBRE TU EXPERIENCIA REAL: años en operaciones, sectores, herramientas que dominas]",
+        bio: [
+          "Más de [X] años trabajando con empresas B2B e industriales, ayudando a transformar necesidades operativas en soluciones de negocio.",
+          "Combinamos conocimiento de procesos, tecnología y gestión para que la automatización genere resultados medibles.",
+        ],
         /** Perfil de LinkedIn (opcional). Vacío = no se muestra. */
         linkedin: "",
-      },
-    ],
-    principlesTitle: "Cómo trabajamos contigo",
-    principles: [
-      {
-        icon: "scale",
-        title: "Independientes de cualquier marca",
-        text: "No vendemos software ni licencias. Recomendamos lo que conviene a tu operación, empezando por lo que ya pagas.",
-      },
-      {
-        icon: "target",
-        title: "Empezamos por algo pequeño",
-        text: "Primero una mejora puntual con resultado visible. Recién después, si tiene sentido, un proyecto más grande.",
-      },
-      {
-        icon: "coins",
-        title: "Hablamos en soles y en horas",
-        text: "Cada propuesta dice cuánto cuesta, cuánto ahorras y en cuántos meses se paga.",
-      },
-      {
-        icon: "users",
-        title: "Tu equipo se queda con el conocimiento",
-        text: "Capacitamos a quienes usan los procesos todos los días para que no dependas de nosotros.",
       },
     ],
   },
@@ -262,29 +293,57 @@ export const site = {
     items: [
       {
         q: "¿Tengo que cambiar mi ERP o comprar un sistema nuevo?",
-        a: "No necesariamente. Primero sacamos provecho de lo que ya tienes: tu ERP, tus Excel, WhatsApp Business. Solo recomendamos una herramienta nueva si el ahorro la justifica, y como no vendemos software, esa recomendación no depende de ninguna marca.",
+        a: "No necesariamente. Primero sacamos provecho de lo que ya tienes: tu ERP, tus Excel, WhatsApp Business. Si hace falta algo nuevo, elegimos la herramienta según tu operación, no según una marca.",
       },
       {
         q: "¿Cuánto cuesta?",
-        a: "El diagnóstico de 30 minutos es gratis. Los proyectos se cotizan según su alcance, y cada propuesta llega con la inversión, el ahorro estimado y el tiempo de recuperación, para que decidas con números.",
+        a: "La llamada de 30 minutos es gratis. Los proyectos se cotizan según su alcance, y cada propuesta llega con la inversión, el ahorro estimado y el tiempo de recuperación, para que decidas con números.",
       },
       {
         q: "¿Cuánto tiempo toma ver resultados?",
-        a: "Empezamos por una automatización puntual para que veas resultados antes de comprometer un proyecto grande. El plazo típico de esa primera mejora es de [PLAZO REAL, ej. 2 a 4 semanas].",
+        a: "Empezamos por una automatización puntual para que veas resultados antes de comprometer un proyecto grande. El plazo concreto depende del proceso y te lo indicamos en la propuesta, antes de empezar.",
       },
       {
         q: "¿Qué pasa con la información de mi empresa?",
-        a: "En la llamada de diagnóstico no necesitamos acceso a tus sistemas: basta con que nos cuentes cómo trabajan. Si luego trabajamos juntos, [CÓMO PROTEGES LA INFORMACIÓN, ej. firmamos un acuerdo de confidencialidad].",
+        a: "En la primera llamada no necesitamos acceso a tus sistemas: basta con que nos cuentes cómo trabajan. Si luego trabajamos juntos, acordamos por escrito cómo se maneja y protege tu información antes de empezar.",
       },
       {
         q: "Mi equipo no es técnico. ¿Igual funciona?",
-        a: "Sí. Diseñamos los procesos junto con las personas que los usan y las capacitamos. El acompañamiento mensual incluye ajustes y soporte cuando algo cambia.",
+        a: "Sí. Diseñamos los procesos junto con las personas que los usan y las capacitamos. La mejora continua incluye ajustes y soporte cuando algo cambia.",
       },
       {
         q: "¿Qué pasa después de la llamada?",
         a: "Si vemos que podemos ayudarte, te enviamos una propuesta con alcance, inversión y retorno estimado. Si no, te lo decimos, y te llevas igual las recomendaciones de la conversación.",
       },
     ],
+  },
+
+  /** CTA final: formulario de 3 campos que abre WhatsApp con el mensaje armado. */
+  booking: {
+    title: "¿Qué proceso de tu empresa debería automatizarse primero?",
+    text: "En 30 minutos lo identificamos contigo. Sales con una idea clara de por dónde empezar, aunque no trabajemos juntos.",
+    agendaTitle: "Qué pasa en esos 30 minutos",
+    agenda: [
+      { time: "Min 0–10", text: "Nos cuentas cómo fluyen hoy ventas, inventario, compras y finanzas." },
+      { time: "Min 10–25", text: "Identificamos las dos o tres tareas manuales que más te cuestan." },
+      { time: "Min 25–30", text: "Te decimos qué automatizar primero y si podemos ayudarte. Sin presión de venta." },
+    ],
+    form: {
+      title: "Cuéntanos en 1 minuto",
+      nameLabel: "Tu nombre",
+      companyLabel: "Empresa",
+      problemLabel: "¿Qué proceso te genera más problemas?",
+      problemPlaceholder: "Ej.: los pedidos llegan por WhatsApp y se pierden…",
+      submit: "Quiero descubrirlo",
+      helper: "Se abrirá WhatsApp con tu mensaje listo para enviar.",
+      /** Mensaje que se arma con los datos del formulario. */
+      messageIntro: `Hola, vi la web de ${name} y quiero descubrir qué automatizar primero.`,
+    },
+    altTitle: "¿Prefieres escribir directo?",
+    whatsappLabel: "WhatsApp",
+    calendarTitle: "¿Prefieres elegir el horario tú mismo?",
+    calendarLoading: "Cargando calendario…",
+    calendarFallback: "Abrir el calendario en una pestaña nueva",
   },
 
   /** Botón flotante de WhatsApp (aparece al bajar de la portada). */
@@ -301,6 +360,6 @@ export function whatsappHref(): string {
 }
 
 export function mailtoHref(): string {
-  const subject = encodeURIComponent(`Diagnóstico gratuito – ${site.name}`);
+  const subject = encodeURIComponent(`Llamada de 30 minutos – ${site.name}`);
   return `mailto:${site.contact.email}?subject=${subject}`;
 }

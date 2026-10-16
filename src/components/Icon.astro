@@ -45,6 +45,11 @@ const paths = {
   linkedin:
     '<rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M8 10.5V16M8 7.75v.01M11.5 16v-5.5M11.5 13c0-1.5 1-2.5 2.5-2.5s2.5 1 2.5 2.5v3"/>',
   user: '<circle cx="12" cy="8.5" r="3.75"/><path d="M4.5 20c.8-3.6 3.8-5.75 7.5-5.75s6.7 2.15 7.5 5.75"/>',
+  tag: '<path d="M3.5 12.6V5a1.5 1.5 0 0 1 1.5-1.5h7.6L20.5 11.4a1.5 1.5 0 0 1 0 2.1l-7 7a1.5 1.5 0 0 1-2.1 0z"/><circle cx="8.5" cy="8.5" r="1.25"/>',
+  cart: '<path d="M3 4h2.5l2.2 10.5h10.6L20.5 7H6.4"/><circle cx="9.5" cy="19" r="1.5"/><circle cx="17" cy="19" r="1.5"/>',
+  cpu: '<rect x="6" y="6" width="12" height="12" rx="1.5"/><path d="M9.5 9.5h5v5h-5zM9 3v3M15 3v3M9 18v3M15 18v3M3 9h3M3 15h3M18 9h3M18 15h3"/>',
+  plug: '<path d="M9 3v5M15 3v5M6.5 8h11v3a5.5 5.5 0 0 1-11 0zM12 16.5V21"/>',
+  flag: '<path d="M5 21V4M5 4h11l-2 4 2 4H5"/>',
 } as const;
 
 const { name, class: className = "", size = 24 } = Astro.props;

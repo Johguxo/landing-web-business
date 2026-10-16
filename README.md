@@ -44,13 +44,16 @@ Todo lo que aparece **entre corchetes**, como `[TU NÚMERO]`, es un dato pendien
 | `seo.ogTagline`            | Frase grande de la imagen que se ve al compartir por WhatsApp o LinkedIn.               |
 | `analytics.ga4Id`          | ID de Google Analytics 4 (`G-XXXXXXXXXX`). Vacío = desactivado.                         |
 | `analytics.metaPixelId`    | ID de Meta Pixel (solo números). Vacío = desactivado.                                   |
-| `team.people`              | **Quién te atiende**: nombre, cargo, foto, experiencia y LinkedIn. Es el elemento que más confianza genera: complétalo con datos reales. |
-| `faq.items`                | Preguntas frecuentes. Dos respuestas tienen marcadores (plazo típico y cómo proteges la información). |
+| `team.people`              | **Quién está detrás**: nombre, cargo, foto, experiencia y LinkedIn. Es el elemento que más confianza genera. |
+| `why.tech`                 | Herramientas con las que trabajas (se muestran como nombres, sin logos). |
+| `roi`                      | Ejemplo ilustrativo de retorno (empresa ficticia). Si cambias las cifras, mantén coherentes los totales y las fórmulas. |
+| `booking.form`             | Textos del formulario final. Al enviarlo, abre WhatsApp con nombre, empresa y proceso ya escritos. |
+| `faq.items`                | Preguntas frecuentes. |
 | `hero`, `problems`, `process`, `audience`, `roi`, `booking` | Textos de cada sección.                          |
 
 ### Foto del equipo
 
-Guarda la foto en `public/equipo/` (cuadrada, mínimo 400×400 px, en `.jpg` o `.webp`, idealmente de menos de 150 KB) y pon la ruta en `team.people[0].photo`, por ejemplo `"/equipo/juan-perez.jpg"`. Una foto real, con buena luz y de frente, vale más que cualquier logo. Para agregar más personas, añade otro objeto al arreglo `people`.
+Guarda la foto en `public/equipo/` (cuadrada, mínimo 600×600 px, en `.jpg` o `.webp`, idealmente de menos de 150 KB) y pon la ruta en `team.people[0].photo`, por ejemplo `"/equipo/erick-villanueva.jpg"`. Una foto real, con buena luz y de frente, vale más que cualquier logo. Para agregar más personas, añade otro objeto al arreglo `people`.
 
 ### Calendly
 
@@ -62,7 +65,7 @@ Guarda la foto en `public/equipo/` (cuadrada, mínimo 400×400 px, en `.jpg` o `
 
 Pega el ID en `analytics.ga4Id` o `analytics.metaPixelId` y vuelve a publicar. Mientras estén vacíos, no se carga ningún script de terceros.
 
-Con la analítica activa, los clics en los botones de agendar, WhatsApp y correo se registran como eventos: `click_agendar_header`, `click_agendar_hero`, `click_agendar_retorno`, `click_whatsapp` y `click_email`. Puedes marcarlos como conversión en GA4 o en Meta.
+Con la analítica activa, los clics de contacto se registran como eventos: `click_agendar_header`, `click_cta_hero`, `click_cta_checklist`, `click_cta_retorno`, `submit_formulario`, `click_whatsapp`, `click_whatsapp_flotante` y `click_email`. Puedes marcarlos como conversión en GA4 o en Meta.
 
 > Si activas analítica, revisa tus obligaciones de aviso de privacidad según la Ley N.º 29733 de Protección de Datos Personales.
 

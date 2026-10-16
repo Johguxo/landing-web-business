@@ -1,9 +1,17 @@
 ---
+/**
+ * CTA final: formulario de 3 campos que abre WhatsApp con el mensaje armado (sin backend).
+ * Si hay calendlyUrl, además se muestra el calendario debajo.
+ */
 import { site, whatsappHref, mailtoHref } from "../config/site";
 import Icon from "./Icon.astro";
 import Marked from "./Marked.astro";
 
 const b = site.booking;
+const f = b.form;
+const waDigits = site.contact.whatsapp.replace(/\D/g, "");
+const waBase = `https://wa.me/${waDigits}`;
+
 const calendlyBase = site.contact.calendlyUrl.trim();
 let calendlyUrl = "";
 if (calendlyBase) {
@@ -13,20 +21,19 @@ if (calendlyBase) {
   calendlyUrl = u.href;
 }
 const hasCalendly = Boolean(calendlyUrl);
+
+const inputClass =
+  "mt-1.5 block w-full rounded-lg border border-transparent bg-paper px-3.5 py-3 text-base text-ink placeholder:text-[#6B7A73] focus:border-amber focus:outline-none focus-visible:outline-3 focus-visible:outline-offset-0 focus-visible:outline-amber";
 ---
 
 <section id="agenda" class="border-t border-line bg-surface py-16 sm:py-24" aria-labelledby="agenda-title">
-  <div
-    class:list={[
-      "mx-auto grid max-w-6xl gap-10 px-4 sm:px-6",
-      hasCalendly ? "lg:grid-cols-[0.8fr_1.2fr] lg:gap-14" : "lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-16",
-    ]}
-  >
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-[1fr_0.95fr] lg:gap-16">
     <div>
       <h2 id="agenda-title" class="text-3xl leading-tight font-bold sm:text-4xl">{b.title}</h2>
       <p class="mt-4 text-lg text-muted">{b.text}</p>
+      <p class="mt-3 font-medium text-pine">{site.cta.note}</p>
 
-      <h3 class="mt-8 font-display text-lg font-semibold">{b.agendaTitle}</h3>
+      <h3 class="mt-9 text-lg font-semibold">{b.agendaTitle}</h3>
       <ol class="mt-4 border-l-2 border-line">
         {
           b.agenda.map((step) => (
@@ -38,35 +45,60 @@ const hasCalendly = Boolean(calendlyUrl);
           ))
         }
       </ol>
+    </div>
 
-      {
-        hasCalendly && (
-          <div class="mt-8 flex flex-col gap-3">
-            <a
-              href={whatsappHref()}
-              target="_blank"
-              rel="noopener"
-              class="btn-secondary self-start text-pine hover:bg-paper"
-              data-track="click_whatsapp"
-            >
-              <Icon name="whatsapp" size={22} />
+    <div class="self-start rounded-xl bg-ink p-5 text-paper sm:p-8">
+      <h3 class="text-xl font-semibold">{f.title}</h3>
+      <form class="mt-5 space-y-4" action={waBase} method="get" target="_blank" data-lead-form data-wa={waBase} data-intro={f.messageIntro} novalidate>
+        <div>
+          <label for="lead-nombre" class="text-[0.95rem] font-medium">{f.nameLabel}</label>
+          <input id="lead-nombre" name="nombre" type="text" autocomplete="name" required maxlength="80" class={inputClass} />
+          <p class="mt-1.5 hidden text-sm text-amber" data-error-for="lead-nombre">Escribe tu nombre.</p>
+        </div>
+        <div>
+          <label for="lead-empresa" class="text-[0.95rem] font-medium">{f.companyLabel}</label>
+          <input id="lead-empresa" name="empresa" type="text" autocomplete="organization" required maxlength="100" class={inputClass} />
+          <p class="mt-1.5 hidden text-sm text-amber" data-error-for="lead-empresa">Escribe el nombre de tu empresa.</p>
+        </div>
+        <div>
+          <label for="lead-proceso" class="text-[0.95rem] font-medium">{f.problemLabel}</label>
+          <textarea id="lead-proceso" name="text" rows="3" required maxlength="500" placeholder={f.problemPlaceholder} class={`${inputClass} resize-y`}></textarea>
+          <p class="mt-1.5 hidden text-sm text-amber" data-error-for="lead-proceso">Cuéntanos en una línea qué proceso te complica.</p>
+        </div>
+        <button type="submit" class="btn-primary w-full text-lg" data-track="submit_formulario">
+          <Icon name="whatsapp" size={22} />
+          {f.submit}
+        </button>
+        <p class="text-center text-sm text-muted-dark">{f.helper}</p>
+      </form>
+
+      <div class="mt-6 border-t border-line-dark pt-5">
+        <p class="text-sm text-muted-dark">{b.altTitle}</p>
+        <ul class="mt-3 space-y-2.5">
+          <li class="flex items-center gap-3">
+            <Icon name="whatsapp" size={20} class="text-pine-light" />
+            <a href={whatsappHref()} target="_blank" rel="noopener" class="underline underline-offset-4 hover:text-amber" data-track="click_whatsapp">
               {b.whatsappLabel}
               <span class="sr-only">(se abre en una nueva pestaña)</span>
             </a>
-            <p class="text-muted">
-              {b.emailLabel}{" "}
-              <a href={mailtoHref()} class="link font-medium" data-track="click_email">
-                <Marked text={site.contact.email} />
-              </a>
-            </p>
-          </div>
-        )
-      }
+            <span class="text-muted-dark"><Marked text={site.contact.whatsapp} /></span>
+          </li>
+          <li class="flex items-center gap-3">
+            <Icon name="mail" size={20} class="text-pine-light" />
+            <a href={mailtoHref()} class="underline underline-offset-4 hover:text-amber" data-track="click_email">
+              <Marked text={site.contact.email} />
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
+  </div>
 
-    {
-      hasCalendly ? (
-        <div class="overflow-hidden rounded-xl border border-line bg-paper">
+  {
+    hasCalendly && (
+      <div class="mx-auto mt-14 max-w-6xl px-4 sm:px-6">
+        <h3 class="text-xl font-semibold">{b.calendarTitle}</h3>
+        <div class="mt-5 overflow-hidden rounded-xl border border-line bg-paper">
           <div class="calendly-inline-widget h-[1040px] min-w-[320px] sm:h-[760px]" data-url={calendlyUrl} data-calendly>
             <div class="flex h-40 flex-col items-center justify-center gap-2 p-6 text-center text-muted" data-calendly-loading>
               <Icon name="calendar" size={28} class="text-pine" />
@@ -77,65 +109,60 @@ const hasCalendly = Boolean(calendlyUrl);
             </div>
           </div>
         </div>
-      ) : (
-        <div class="rounded-xl bg-ink p-5 text-paper sm:p-8">
-          <p class="font-display text-xl font-semibold">{b.contactTitle}</p>
-          <p class="mt-2 text-muted-dark">{b.contactText}</p>
-          <a
-            href={whatsappHref()}
-            target="_blank"
-            rel="noopener"
-            class="btn-primary mt-6 w-full whitespace-nowrap !px-4 sm:text-lg"
-            data-track="click_whatsapp"
-          >
-            <Icon name="whatsapp" size={22} />
-            {b.whatsappLabel}
-            <span class="sr-only">(se abre en una nueva pestaña)</span>
-          </a>
-          <dl class="mt-6 space-y-3 border-t border-line-dark pt-6">
-            <div class="flex items-center gap-3">
-              <dt>
-                <Icon name="whatsapp" size={20} class="text-pine-light" />
-                <span class="sr-only">WhatsApp</span>
-              </dt>
-              <dd><Marked text={site.contact.whatsapp} /></dd>
-            </div>
-            <div class="flex items-center gap-3">
-              <dt>
-                <Icon name="mail" size={20} class="text-pine-light" />
-                <span class="sr-only">Correo</span>
-              </dt>
-              <dd>
-                <a href={mailtoHref()} class="underline underline-offset-4 hover:text-amber" data-track="click_email">
-                  <Marked text={site.contact.email} />
-                </a>
-              </dd>
-            </div>
-          </dl>
-        </div>
-      )
-    }
-  </div>
+      </div>
+    )
+  }
 </section>
+
+<script>
+  // Formulario → WhatsApp con mensaje armado. Validación propia para mostrar errores junto a cada campo.
+  const form = document.querySelector<HTMLFormElement>("[data-lead-form]");
+  if (form) {
+    const fields = Array.from(form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>("input, textarea"));
+    const showError = (el: HTMLInputElement | HTMLTextAreaElement, show: boolean) => {
+      const msg = form.querySelector<HTMLElement>(`[data-error-for="${el.id}"]`);
+      msg?.classList.toggle("hidden", !show);
+      el.setAttribute("aria-invalid", String(show));
+      if (msg) {
+        msg.id = `${el.id}-error`;
+        if (show) el.setAttribute("aria-describedby", msg.id);
+        else el.removeAttribute("aria-describedby");
+      }
+    };
+    fields.forEach((el) => el.addEventListener("blur", () => el.value.trim() && showError(el, false)));
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const invalid = fields.filter((el) => !el.value.trim());
+      fields.forEach((el) => showError(el, invalid.includes(el)));
+      if (invalid.length) {
+        invalid[0].focus();
+        return;
+      }
+      const [nombre, empresa, proceso] = fields.map((el) => el.value.trim());
+      const text = `${form.dataset.intro}\n\nNombre: ${nombre}\nEmpresa: ${empresa}\nProceso que más problemas genera: ${proceso}`;
+      const url = `${form.dataset.wa}?text=${encodeURIComponent(text)}`;
+      // Enlace temporal: abre WhatsApp en otra pestaña (en celular, abre la app).
+      const link = Object.assign(document.createElement("a"), { href: url, target: "_blank", rel: "noopener" });
+      link.click();
+    });
+  }
+</script>
 
 {
   hasCalendly && (
     <script>
-      // Carga Calendly solo cuando la sección está cerca de la pantalla (no afecta la carga inicial).
+      // Carga Calendly solo cuando está cerca de la pantalla (no afecta la carga inicial).
       const widget = document.querySelector<HTMLElement>("[data-calendly]");
       if (widget) {
-        const load = () => {
-          const s = document.createElement("script");
-          s.src = "https://assets.calendly.com/assets/external/widget.js";
-          s.async = true;
-          s.onload = () => widget.querySelector("[data-calendly-loading]")?.remove();
-          document.head.appendChild(s);
-        };
         const io = new IntersectionObserver(
           (entries) => {
             if (entries.some((e) => e.isIntersecting)) {
               io.disconnect();
-              load();
+              const s = document.createElement("script");
+              s.src = "https://assets.calendly.com/assets/external/widget.js";
+              s.async = true;
+              s.onload = () => widget.querySelector("[data-calendly-loading]")?.remove();
+              document.head.appendChild(s);
             }
           },
           { rootMargin: "600px 0px" },

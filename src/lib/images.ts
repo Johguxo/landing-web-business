@@ -96,7 +96,7 @@ export async function ogImagePng(): Promise<Buffer> {
   const top = Math.round((H - blockH) / 2 + size * 0.85);
   tagline = textPath(bold, site.seo.ogTagline, { x: pad, y: top, size, maxWidth: W - pad * 2, lineHeight: 1.18, fill: PAPER });
 
-  const footer = textPath(regular, `Transformación operativa para PYMES en ${site.city}`, {
+  const footer = textPath(regular, site.seo.ogFooter, {
     x: pad + 120,
     y: H - pad + 2,
     size: 24,

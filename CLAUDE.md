@@ -4,14 +4,16 @@ Landing page de una sola página para **Operia** (nombre provisional). Astro + T
 
 ## Negocio
 
-- **Qué es:** consultora de transformación operativa para PYMES en Lima, Perú. **No vende software.** Integra herramientas existentes (ERP, CRM, Power BI, automatización de flujos, WhatsApp Business, IA) para eliminar trabajo manual y dar control de la operación.
+- **Qué es:** consultora de transformación operativa para empresas en crecimiento en Lima, Perú. **No vende software.** Integra herramientas existentes (ERP, CRM, Power BI, automatización de flujos, WhatsApp Business, IA) para eliminar trabajo manual y dar control de la operación.
 - **Cliente ideal:** dueños y gerentes de empresas de 10 a 100 personas: distribuidoras, importadoras, industria pequeña/mediana y servicios B2B.
-- **Objetivo único de la página:** que agenden un diagnóstico gratuito de 30 minutos. Toda decisión de contenido o diseño debe servir a ese objetivo; no agregar secciones, enlaces o CTAs que distraigan.
+- **Fundador:** Erick Villanueva, Ingeniero Mecánico + MBA (falta confirmar años de experiencia y foto).
+- **Objetivo único de la página:** que agenden la llamada gratuita de 30 minutos para "descubrir qué automatizar primero". Toda decisión de contenido o diseño debe servir a ese objetivo; no agregar secciones, enlaces o CTAs que distraigan.
 - **Idioma y tono:** español de Perú, profesional y directo, tuteo ("agenda", "tu empresa"). Moneda en soles (`S/`).
+- **Vocabulario:** no usar "PYME" en la web; decir "empresas en crecimiento" (el gerente no se ve como PYME). No repetir "no vendemos software": comunicar la independencia en positivo ("no estamos casados con ninguna tecnología"). En los CTA, preferir el beneficio ("Descubre qué automatizar primero") a "diagnóstico", que suena a venta.
 
 ## Reglas (obligatorias)
 
-1. **No inventar** testimonios, logos de clientes, cifras, estadísticas, casos ni plazos. Si falta un dato real, usar un marcador visible entre corchetes: `[TU NÚMERO]`, `[CIFRA REAL]`, etc. El componente `Marked.astro` los resalta en la página.
+1. **No inventar** testimonios, logos de clientes, cifras, estadísticas, casos ni plazos. Si falta un dato real, usar un marcador visible entre corchetes: `[TU NÚMERO]`, `[CIFRA REAL]`, etc. El componente `Marked.astro` los resalta en la página. **Única excepción:** el ejemplo de retorno (`roi`) usa cifras ilustrativas de una empresa ficticia, siempre etiquetadas como "Ejemplo ilustrativo", con supuestos y fórmulas visibles, y nunca presentadas como resultado de un cliente.
 2. **Todos los datos editables viven en `src/config/site.ts`**: nombre, razón social, contacto, Calendly, dominio, SEO, analítica y textos de cada sección. Los componentes no deben llevar textos de contenido escritos directamente; el nombre siempre se toma de `site.name`.
 3. **Diseño:**
    - Colores: verde oscuro `#10211D` (`ink`: cabecera y bloques destacados), fondo claro `#F3F4F1` (`paper`), ámbar `#E8A33D` (`amber`: botones principales, **siempre con texto `ink`**, nunca blanco, por contraste), verde `#0F5C4D` (`pine`: enlaces y detalles). Los tokens están en `src/styles/global.css`.
@@ -25,24 +27,27 @@ Landing page de una sola página para **Operia** (nombre provisional). Astro + T
 
 ## Estructura de la página (orden fijo)
 
-1. Header fijo: logo, anclas (Problemas, Cómo trabajamos, Para quién) y botón "Agendar diagnóstico", siempre visible también en móvil.
-2. Hero con puntos de confianza (solo hechos verificables) y el visual "Hoy vs Con Operia" (`FlowCompare.astro`).
-3. Problemas como **checklist interactivo** de 6 casillas, con un contador que lleva a agendar.
-4. Cómo trabajamos (4 pasos numerados).
-5. Para quién (10 a 100 personas, 4 rubros) y "Probablemente no somos para ti si…".
-6. Retorno: vista previa de una propuesta (documento) con valores entre corchetes.
-7. Quién te atiende (`Team.astro`): persona real con foto, más 4 principios de trabajo.
-8. Preguntas frecuentes (`Faq.astro`, `<details>` nativo y JSON-LD FAQPage, sin las respuestas que tienen marcadores pendientes).
-9. Agenda (`#agenda`): qué pasa en los 30 minutos, más Calendly si hay `calendlyUrl`; si no, tarjeta con WhatsApp y correo.
-10. Footer: nombre, "Lima, Perú", razón social y año.
+1. Header fijo: logo, anclas (Problemas, Qué hacemos, Cómo trabajamos, Para quién; menú hamburguesa bajo 1024 px) y botón "Agendar 30 min".
+2. Hero: titular, subtítulo, CTA "Descubre qué automatizar primero" y "30 min · Gratis · Sin compromiso". Sin visual.
+3. El problema: checklist interactivo de 6 casillas con contador y CTA.
+4. Antes → Después (`BeforeAfter.astro` + `FlowCompare.astro`): flujos de 6 pasos con consecuencias; el flujo "Después" se anima al entrar en pantalla.
+5. Qué hacemos (`Services.astro`): 6 áreas (Ventas, Inventario, Compras, Finanzas, Datos, IA).
+6. Cómo lo hacemos (`Process.astro`): Diagnóstico → Primera automatización → Integración → Mejora continua.
+7. Por qué nosotros (`Why.astro`): 4 tarjetas y franja de tecnologías como nombres, sin logos ni protagonismo de marca (no somos partner de ninguna).
+8. Retorno (`Roi.astro`): "Así calculamos tu retorno", ejemplo ilustrativo.
+9. Para quién (`Audience.astro`): titular de perfil, 4 rubros y "Probablemente no somos para ti si…".
+10. Quién está detrás (`Team.astro`): foto, nombre, formación y experiencia del fundador.
+11. Preguntas frecuentes (`Faq.astro`).
+12. CTA final (`Booking.astro`, `#agenda`): qué pasa en los 30 minutos y formulario de 3 campos (nombre, empresa, proceso problemático) que **abre WhatsApp con el mensaje armado** (sin backend); WhatsApp y correo como alternativa; Calendly debajo si hay `calendlyUrl`.
+13. Footer.
 
-Además, un botón flotante de WhatsApp (`StickyCta.astro`) que aparece después del hero y se oculta en la agenda y el footer. No agregar una barra inferior con "Agendar": duplicaría el botón del header.
+Además, un botón flotante de WhatsApp (`StickyCta.astro`) que aparece después del hero y se oculta en la agenda y el footer.
 
 ## Principios de conversión (por qué la página está armada así)
 
 - La confianza en una consultoría viene de **personas y transparencia**, no de adornos. Prioridad: quién atiende, qué pasa exactamente en la llamada y respuestas honestas a las objeciones (precio, cambiar el ERP, confidencialidad, equipo no técnico).
-- "No vendemos software" (independencia) es el argumento de confianza más fuerte: debe verse en el hero y en los principios.
-- Sin prueba social inventada. Cuando haya casos reales con permiso del cliente, agregarlos como sección propia, antes de "Quién te atiende".
+- La independencia tecnológica es el diferenciador más fuerte: se comunica en positivo en "Por qué nosotros" y en la franja de tecnologías.
+- Sin prueba social inventada. Cuando haya casos reales con permiso del cliente, agregarlos como sección propia, antes de "Quién está detrás".
 
 ## Comandos
 

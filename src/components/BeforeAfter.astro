@@ -1,0 +1,74 @@
+---
+import { site } from "../config/site";
+import FlowCompare from "./FlowCompare.astro";
+import Icon from "./Icon.astro";
+
+const b = site.beforeAfter;
+---
+
+<section id="antes-despues" class="bg-ink py-16 text-paper sm:py-24" aria-labelledby="ba-title" data-reveal>
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <div class="max-w-2xl">
+      <h2 id="ba-title" class="text-3xl leading-tight font-bold sm:text-4xl">{b.title}</h2>
+      <p class="mt-4 text-lg text-muted-dark">{b.intro}</p>
+    </div>
+
+    <div class="mt-10 grid grid-cols-2 gap-3 sm:gap-6">
+      {
+        [
+          { side: b.before, variant: "before" as const },
+          { side: b.after, variant: "after" as const },
+        ].map(({ side, variant }) => (
+          <figure
+            class:list={[
+              "flex flex-col gap-6 rounded-xl border p-3 sm:p-6 lg:flex-row lg:items-center lg:gap-10",
+              variant === "before" ? "border-line-dark bg-ink-2/60" : "border-pine bg-pine/25",
+            ]}
+          >
+            <div class="lg:w-[220px] lg:shrink-0">
+              <p class:list={["mb-3 font-display font-semibold sm:text-lg", variant === "before" ? "text-muted-dark" : "text-paper"]}>
+                {side.label}
+              </p>
+              <FlowCompare variant={variant} steps={side.flow} />
+            </div>
+            <figcaption>
+              <span class="sr-only">
+                {side.label}: {side.flow.join(", ")}.
+              </span>
+              <ul class="space-y-2.5 text-sm sm:space-y-3 sm:text-base">
+                {side.points.map((pt) => (
+                  <li class="flex gap-2">
+                    {variant === "before" ? (
+                      <Icon name="close" size={18} class="mt-0.5 shrink-0 text-[#E8A33D]" />
+                    ) : (
+                      <Icon name="check" size={18} class="mt-0.5 shrink-0 text-pine-light" />
+                    )}
+                    <span class:list={[variant === "before" ? "text-muted-dark" : "text-paper"]}>{pt}</span>
+                  </li>
+                ))}
+              </ul>
+            </figcaption>
+          </figure>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script>
+  // Activa la animación del flujo conectado cuando la sección entra en pantalla.
+  const el = document.querySelector("[data-reveal]");
+  if (el && "IntersectionObserver" in window) {
+    el.classList.add("reveal-ready");
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((e) => e.isIntersecting)) {
+          el.classList.add("is-visible");
+          io.disconnect();
+        }
+      },
+      { threshold: 0.25 },
+    );
+    io.observe(el);
+  }
+</script>

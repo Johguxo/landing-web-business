@@ -10,7 +10,7 @@ import Icon from "./Icon.astro";
       <Logo />
     </a>
 
-    <nav aria-label="Principal" class="hidden md:block">
+    <nav aria-label="Principal" class="hidden lg:block">
       <ul class="flex items-center gap-8 text-[0.95rem]">
         {
           site.nav.map((item) => (
@@ -26,10 +26,10 @@ import Icon from "./Icon.astro";
 
     <div class="flex items-center gap-2">
       <a href="#agenda" class="btn-primary !min-h-10 !px-4 !py-2 text-sm sm:text-base" data-track="click_agendar_header">
-        {site.cta.primary}
+        {site.cta.header}
       </a>
 
-      <details class="group relative md:hidden" data-menu>
+      <details class="group relative lg:hidden" data-menu>
         <summary
           class="flex h-10 w-10 cursor-pointer list-none items-center justify-center rounded-lg text-paper hover:bg-ink-2 [&::-webkit-details-marker]:hidden"
           aria-label="Abrir menú"
