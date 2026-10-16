@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #10211d;
+  --color-ink-2: #183029;
+  --color-paper: #f3f4f1;
+  --color-surface: #ffffff;
+  --color-amber: #e8a33d;
+  --color-amber-hover: #f0b458;
+  --color-pine: #0f5c4d;
+  --color-pine-light: #8fc9b8;
+  --color-line: #d8ddd6;
+  --color-line-dark: #2c443d;
+  --color-muted: #48564f;
+  --color-muted-dark: #b5c3bc;
+
+  /* Las variables --font-sora y --font-plex las define Astro (ver "fonts" en astro.config.mjs). */
+  --font-display: var(--font-sora);
+  --font-sans: var(--font-plex);
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: 5rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-amber);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+@layer components {
+  /* Botón principal: ámbar con texto verde oscuro (contraste 7.9:1). */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    background-color: var(--color-amber);
+    color: var(--color-ink);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.2;
+    text-align: center;
+    text-decoration: none;
+    transition: background-color 150ms ease;
+  }
+  .btn-primary:hover {
+    background-color: var(--color-amber-hover);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3rem;
+    padding: 0.75rem 1.25rem;
+    border-radius: 0.5rem;
+    border: 1.5px solid currentColor;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.2;
+    text-decoration: none;
+    transition: background-color 150ms ease;
+  }
+
+  .link {
+    color: var(--color-pine);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .link:hover {
+    text-decoration-thickness: 2px;
+  }
+
+  /* Marcador de dato pendiente: visible a propósito para que no se publique por error. */
+  .placeholder {
+    background-color: #fff1d6;
+    color: #6b4a0e;
+    padding: 0 0.25em;
+    border-radius: 3px;
+    font-weight: 500;
+  }
+}

@@ -1,0 +1,13 @@
+---
+/**
+ * Muestra un texto y resalta los marcadores pendientes entre corchetes, ej. [TU NÚMERO].
+ * Así ningún dato faltante pasa desapercibido antes de publicar.
+ */
+interface Props {
+  text: string;
+}
+const { text } = Astro.props;
+const parts = text.split(/(\[[^\]]+\])/g).filter(Boolean);
+---
+
+{parts.map((part) => (part.startsWith("[") ? <span class="placeholder">{part}</span> : part))}

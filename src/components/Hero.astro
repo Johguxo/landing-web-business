@@ -1,0 +1,31 @@
+---
+import { site } from "../config/site";
+import FlowCompare from "./FlowCompare.astro";
+---
+
+<section id="inicio" class="bg-ink pt-16 text-paper">
+  <div
+    class="mx-auto grid max-w-6xl gap-10 px-4 pt-10 pb-14 sm:px-6 sm:pt-16 md:pb-20 lg:grid-cols-[1.15fr_1fr] lg:items-center lg:gap-14 lg:pt-20 lg:pb-24"
+  >
+    <div>
+      <h1 class="text-[2.125rem] leading-[1.12] font-bold sm:text-5xl lg:text-[3.25rem]">
+        {site.hero.title}
+      </h1>
+      <p class="mt-5 max-w-xl text-lg text-muted-dark sm:text-xl">{site.hero.subtitle}</p>
+
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
+        <a href="#agenda" class="btn-primary text-lg whitespace-nowrap sm:!px-7" data-track="click_agendar_hero">
+          {site.cta.primaryLong}
+        </a>
+        <a href="#como-trabajamos" class="btn-secondary whitespace-nowrap text-paper/90 hover:bg-ink-2">
+          {site.hero.secondary}
+        </a>
+      </div>
+      <p class="mt-4 text-sm text-muted-dark">{site.hero.note}</p>
+    </div>
+
+    <div class="mx-auto w-full max-w-md lg:max-w-none">
+      <FlowCompare />
+    </div>
+  </div>
+</section>

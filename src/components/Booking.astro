@@ -1,0 +1,145 @@
+---
+import { site, whatsappHref, mailtoHref } from "../config/site";
+import Icon from "./Icon.astro";
+import Marked from "./Marked.astro";
+
+const b = site.booking;
+const calendlyBase = site.contact.calendlyUrl.trim();
+let calendlyUrl = "";
+if (calendlyBase) {
+  const u = new URL(calendlyBase);
+  u.searchParams.set("hide_gdpr_banner", "1");
+  u.searchParams.set("primary_color", "0f5c4d");
+  calendlyUrl = u.href;
+}
+const hasCalendly = Boolean(calendlyUrl);
+---
+
+<section id="agenda" class="border-t border-line bg-surface py-16 sm:py-24" aria-labelledby="agenda-title">
+  <div
+    class:list={[
+      "mx-auto grid max-w-6xl gap-10 px-4 sm:px-6",
+      hasCalendly ? "lg:grid-cols-[0.8fr_1.2fr] lg:gap-14" : "lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:gap-16",
+    ]}
+  >
+    <div>
+      <h2 id="agenda-title" class="text-3xl leading-tight font-bold sm:text-4xl">{b.title}</h2>
+      <p class="mt-4 text-lg text-muted">{b.text}</p>
+
+      <ul class="mt-6 space-y-3">
+        {
+          b.points.map((p) => (
+            <li class="flex gap-3">
+              <Icon name="check" size={22} class="mt-0.5 shrink-0 text-pine" />
+              <span>{p}</span>
+            </li>
+          ))
+        }
+      </ul>
+
+      {
+        hasCalendly && (
+          <div class="mt-8 flex flex-col gap-3">
+            <a
+              href={whatsappHref()}
+              target="_blank"
+              rel="noopener"
+              class="btn-secondary self-start text-pine hover:bg-paper"
+              data-track="click_whatsapp"
+            >
+              <Icon name="whatsapp" size={22} />
+              {b.whatsappLabel}
+              <span class="sr-only">(se abre en una nueva pestaña)</span>
+            </a>
+            <p class="text-muted">
+              {b.emailLabel}{" "}
+              <a href={mailtoHref()} class="link font-medium" data-track="click_email">
+                <Marked text={site.contact.email} />
+              </a>
+            </p>
+          </div>
+        )
+      }
+    </div>
+
+    {
+      hasCalendly ? (
+        <div class="overflow-hidden rounded-xl border border-line bg-paper">
+          <div class="calendly-inline-widget h-[1040px] min-w-[320px] sm:h-[760px]" data-url={calendlyUrl} data-calendly>
+            <div class="flex h-40 flex-col items-center justify-center gap-2 p-6 text-center text-muted" data-calendly-loading>
+              <Icon name="calendar" size={28} class="text-pine" />
+              <p>{b.calendarLoading}</p>
+              <a href={calendlyBase} target="_blank" rel="noopener" class="link text-sm">
+                {b.calendarFallback}
+              </a>
+            </div>
+          </div>
+        </div>
+      ) : (
+        <div class="rounded-xl bg-ink p-5 text-paper sm:p-8">
+          <p class="font-display text-xl font-semibold">{b.contactTitle}</p>
+          <p class="mt-2 text-muted-dark">{b.contactText}</p>
+          <a
+            href={whatsappHref()}
+            target="_blank"
+            rel="noopener"
+            class="btn-primary mt-6 w-full whitespace-nowrap !px-4 sm:text-lg"
+            data-track="click_whatsapp"
+          >
+            <Icon name="whatsapp" size={22} />
+            {b.whatsappLabel}
+            <span class="sr-only">(se abre en una nueva pestaña)</span>
+          </a>
+          <dl class="mt-6 space-y-3 border-t border-line-dark pt-6">
+            <div class="flex items-center gap-3">
+              <dt>
+                <Icon name="whatsapp" size={20} class="text-pine-light" />
+                <span class="sr-only">WhatsApp</span>
+              </dt>
+              <dd><Marked text={site.contact.whatsapp} /></dd>
+            </div>
+            <div class="flex items-center gap-3">
+              <dt>
+                <Icon name="mail" size={20} class="text-pine-light" />
+                <span class="sr-only">Correo</span>
+              </dt>
+              <dd>
+                <a href={mailtoHref()} class="underline underline-offset-4 hover:text-amber" data-track="click_email">
+                  <Marked text={site.contact.email} />
+                </a>
+              </dd>
+            </div>
+          </dl>
+        </div>
+      )
+    }
+  </div>
+</section>
+
+{
+  hasCalendly && (
+    <script>
+      // Carga Calendly solo cuando la sección está cerca de la pantalla (no afecta la carga inicial).
+      const widget = document.querySelector<HTMLElement>("[data-calendly]");
+      if (widget) {
+        const load = () => {
+          const s = document.createElement("script");
+          s.src = "https://assets.calendly.com/assets/external/widget.js";
+          s.async = true;
+          s.onload = () => widget.querySelector("[data-calendly-loading]")?.remove();
+          document.head.appendChild(s);
+        };
+        const io = new IntersectionObserver(
+          (entries) => {
+            if (entries.some((e) => e.isIntersecting)) {
+              io.disconnect();
+              load();
+            }
+          },
+          { rootMargin: "600px 0px" },
+        );
+        io.observe(widget);
+      }
+    </script>
+  )
+}

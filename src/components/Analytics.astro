@@ -1,0 +1,77 @@
+---
+/**
+ * GA4 y Meta Pixel. No se carga nada mientras los IDs en src/config/site.ts estén vacíos.
+ */
+import { site } from "../config/site";
+
+const ga4Id = site.analytics.ga4Id.trim();
+const pixelId = site.analytics.metaPixelId.trim();
+---
+
+{
+  ga4Id && (
+    <>
+      <script is:inline async src={`https://www.googletagmanager.com/gtag/js?id=${ga4Id}`} />
+      <script is:inline define:vars={{ ga4Id }}>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() {
+          dataLayer.push(arguments);
+        }
+        window.gtag = gtag;
+        gtag("js", new Date());
+        gtag("config", ga4Id);
+      </script>
+    </>
+  )
+}
+
+{
+  pixelId && (
+    <>
+      <script is:inline define:vars={{ pixelId }}>
+        !(function (f, b, e, v, n, t, s) {
+          if (f.fbq) return;
+          n = f.fbq = function () {
+            n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+          };
+          if (!f._fbq) f._fbq = n;
+          n.push = n;
+          n.loaded = !0;
+          n.version = "2.0";
+          n.queue = [];
+          t = b.createElement(e);
+          t.async = !0;
+          t.src = v;
+          s = b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t, s);
+        })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+        fbq("init", pixelId);
+        fbq("track", "PageView");
+      </script>
+      <noscript>
+        <img
+          height="1"
+          width="1"
+          style="display:none"
+          alt=""
+          src={`https://www.facebook.com/tr?id=${pixelId}&ev=PageView&noscript=1`}
+        />
+      </noscript>
+    </>
+  )
+}
+
+{
+  (ga4Id || pixelId) && (
+    <script is:inline>
+      // Registra los clics en los botones de contacto como conversión.
+      document.addEventListener("click", function (e) {
+        var el = e.target.closest && e.target.closest("[data-track]");
+        if (!el) return;
+        var action = el.getAttribute("data-track");
+        if (window.gtag) window.gtag("event", action);
+        if (window.fbq) window.fbq("trackCustom", action);
+      });
+    </script>
+  )
+}

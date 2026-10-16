@@ -1,0 +1,64 @@
+---
+import { site } from "../config/site";
+import Marked from "./Marked.astro";
+
+const r = site.roi;
+---
+
+<section class="bg-ink py-16 text-paper sm:py-24" aria-labelledby="retorno-title">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6">
+    <div class="max-w-3xl">
+      <h2 id="retorno-title" class="text-3xl leading-tight font-bold sm:text-4xl">{r.title}</h2>
+      <p class="mt-4 text-lg text-muted-dark">{r.text}</p>
+    </div>
+
+    <!-- Móvil: una ficha por proceso -->
+    <ul class="mt-10 space-y-3 md:hidden">
+      {
+        r.rows.map((row) => (
+          <li class="rounded-lg border border-line-dark bg-ink-2 p-4">
+            <p class="font-display font-semibold">{row[0]}</p>
+            <dl class="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+              {row.slice(1).map((cell, j) => (
+                <div>
+                  <dt class="text-muted-dark">{r.columns[j + 1]}</dt>
+                  <dd class="mt-0.5 font-medium text-paper"><Marked text={cell} /></dd>
+                </div>
+              ))}
+            </dl>
+          </li>
+        ))
+      }
+    </ul>
+
+    <!-- Escritorio: tabla -->
+    <div class="mt-10 hidden overflow-hidden rounded-xl border border-line-dark md:block">
+      <table class="w-full text-left text-[0.95rem]">
+        <caption class="sr-only">{r.caption}</caption>
+        <thead class="bg-ink-2 text-muted-dark">
+          <tr>
+            {r.columns.map((c) => <th scope="col" class="px-5 py-3.5 font-medium">{c}</th>)}
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-line-dark">
+          {
+            r.rows.map((row) => (
+              <tr>
+                <th scope="row" class="px-5 py-4 font-medium">{row[0]}</th>
+                {row.slice(1).map((cell) => (
+                  <td class="px-5 py-4">
+                    <Marked text={cell} />
+                  </td>
+                ))}
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <p class="mt-4 text-sm text-muted-dark">{r.caption}</p>
+
+    <a href="#agenda" class="btn-primary mt-10" data-track="click_agendar_retorno">{site.cta.primaryLong}</a>
+  </div>
+</section>

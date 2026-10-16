@@ -1,0 +1,141 @@
+---
+/**
+ * Visual "Hoy vs Con Operia": a la izquierda, información que rebota entre personas y archivos;
+ * a la derecha, un solo flujo continuo.
+ */
+import { site } from "../config/site";
+
+const today = site.hero.flowToday;
+const integrated = site.hero.flowIntegrated;
+
+// Posiciones del flujo desordenado (centro x, centro y, rotación en grados)
+const messy = [
+  { x: 54, y: 40, r: -4 },
+  { x: 124, y: 116, r: 3 },
+  { x: 54, y: 196, r: 2 },
+  { x: 126, y: 274, r: -3 },
+  { x: 62, y: 356, r: 4 },
+];
+const ys = [40, 116, 192, 268, 344];
+---
+
+<figure class="flow-compare">
+  <figcaption class="sr-only">
+    Comparación. Hoy: {today.join(", ")}, con la información pasando de mano en mano y volviendo atrás. Con {
+      site.name
+    }: {integrated.join(", ")}, en un solo flujo continuo.
+  </figcaption>
+
+  <div class="grid grid-cols-2 gap-3 sm:gap-4" aria-hidden="true">
+    <!-- Hoy -->
+    <div class="rounded-xl border border-line-dark bg-ink-2/60 p-3 sm:p-4">
+      <p class="mb-2 font-display text-sm font-semibold text-muted-dark sm:text-base">Hoy</p>
+      <svg viewBox="0 0 180 400" class="h-auto w-full overflow-visible" role="presentation">
+        <g fill="none" stroke="#7E948C" stroke-width="1.6" stroke-dasharray="5 5" stroke-linecap="round">
+          <path d="M72 58 C 100 70, 124 80, 122 98" />
+          <path d="M110 134 C 90 160, 56 152, 56 178" />
+          <path d="M68 214 C 92 240, 130 232, 122 256" />
+          <path d="M114 292 C 102 320, 80 320, 72 338" />
+          <!-- retrocesos: el dato vuelve atrás para confirmarse -->
+          <path d="M10 182 C -2 140, -2 90, 12 56" stroke="#E8A33D" stroke-opacity="0.8" />
+          <path d="M172 260 C 184 200, 182 150, 170 130" />
+          <path d="M104 368 C 160 370, 182 330, 170 292" stroke="#E8A33D" stroke-opacity="0.8" />
+          <path d="M22 340 C 4 300, 8 240, 22 214" />
+        </g>
+        <g font-size="12" class="font-display" font-weight="600" fill="#E8A33D" text-anchor="middle">
+          <text x="-6" y="124">?</text>
+          <text x="188" y="200">?</text>
+          <text x="182" y="356">?</text>
+        </g>
+        {
+          messy.map((p, i) => (
+            <g transform={`rotate(${p.r} ${p.x} ${p.y})`}>
+              <rect
+                x={p.x - 50}
+                y={p.y - 18}
+                width="100"
+                height="36"
+                rx="6"
+                fill="#10211D"
+                stroke="#5F7A71"
+                stroke-width="1.5"
+                stroke-dasharray="4 3"
+              />
+              <text
+                x={p.x}
+                y={p.y + 6}
+                text-anchor="middle"
+                font-size="17"
+                class="font-sans"
+                fill="#D7DFDA"
+              >
+                {today[i]}
+              </text>
+            </g>
+          ))
+        }
+      </svg>
+    </div>
+
+    <!-- Con Operia -->
+    <div class="rounded-xl border border-pine bg-pine/25 p-3 sm:p-4">
+      <p class="mb-2 font-display text-sm font-semibold text-paper sm:text-base">Con {site.name}</p>
+      <svg viewBox="0 0 180 400" class="h-auto w-full overflow-visible" role="presentation">
+        <line x1="90" y1={ys[0]} x2="90" y2={ys[4]} stroke="#E8A33D" stroke-width="2.5" class="flow-line" />
+        {
+          integrated.map((label, i) => (
+            <g class="flow-node" style={`--i:${i}`}>
+              <rect
+                x="4"
+                y={ys[i] - 19}
+                width="172"
+                height="38"
+                rx="8"
+                fill="#10211D"
+                stroke="#8FC9B8"
+                stroke-width="1.5"
+              />
+              <circle cx="24" cy={ys[i]} r="7" fill="#E8A33D" />
+              <path
+                d={`M20.5 ${ys[i]} l2.5 2.5 l4.5 -5`}
+                fill="none"
+                stroke="#10211D"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+              <text x="100" y={ys[i] + 6} text-anchor="middle" font-size="17" class="font-sans" font-weight="500" fill="#F3F4F1">
+                {label}
+              </text>
+            </g>
+          ))
+        }
+      </svg>
+    </div>
+  </div>
+</figure>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    .flow-line {
+      stroke-dasharray: 304;
+      stroke-dashoffset: 304;
+      animation: draw 1.1s 0.3s ease-out forwards;
+    }
+    .flow-node {
+      opacity: 0;
+      animation: appear 0.4s ease-out forwards;
+      animation-delay: calc(0.3s + var(--i) * 0.22s);
+    }
+    @keyframes draw {
+      to {
+        stroke-dashoffset: 0;
+      }
+    }
+    @keyframes appear {
+      to {
+        opacity: 1;
+      }
+    }
+  }
+</style>
