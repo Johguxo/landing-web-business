@@ -44,7 +44,13 @@ Todo lo que aparece **entre corchetes**, como `[TU NÚMERO]`, es un dato pendien
 | `seo.ogTagline`            | Frase grande de la imagen que se ve al compartir por WhatsApp o LinkedIn.               |
 | `analytics.ga4Id`          | ID de Google Analytics 4 (`G-XXXXXXXXXX`). Vacío = desactivado.                         |
 | `analytics.metaPixelId`    | ID de Meta Pixel (solo números). Vacío = desactivado.                                   |
+| `team.people`              | **Quién te atiende**: nombre, cargo, foto, experiencia y LinkedIn. Es el elemento que más confianza genera: complétalo con datos reales. |
+| `faq.items`                | Preguntas frecuentes. Dos respuestas tienen marcadores (plazo típico y cómo proteges la información). |
 | `hero`, `problems`, `process`, `audience`, `roi`, `booking` | Textos de cada sección.                          |
+
+### Foto del equipo
+
+Guarda la foto en `public/equipo/` (cuadrada, mínimo 400×400 px, en `.jpg` o `.webp`, idealmente de menos de 150 KB) y pon la ruta en `team.people[0].photo`, por ejemplo `"/equipo/juan-perez.jpg"`. Una foto real, con buena luz y de frente, vale más que cualquier logo. Para agregar más personas, añade otro objeto al arreglo `people`.
 
 ### Calendly
 

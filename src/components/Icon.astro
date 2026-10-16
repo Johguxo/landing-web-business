@@ -36,6 +36,15 @@ const paths = {
     '<rect x="3.5" y="5" width="17" height="15" rx="1.5"/><path d="M3.5 9.5h17M8 3v4M16 3v4"/>',
   users:
     '<circle cx="9" cy="8.5" r="3.25"/><path d="M3 19.5c.6-3.2 3-5 6-5s5.4 1.8 6 5"/><path d="M15.5 5.5a3.25 3.25 0 0 1 0 6.3M17.5 14.8c1.8.6 3.1 2.2 3.5 4.7"/>',
+  scale:
+    '<path d="M12 4v16M7 20h10M5 7h14"/><path d="m5 7-2.5 6a3 3 0 0 0 5 0zM19 7l-2.5 6a3 3 0 0 0 5 0z"/>',
+  target: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="4"/><circle cx="12" cy="12" r="0.75"/>',
+  coins:
+    '<ellipse cx="9" cy="7" rx="5.5" ry="2.5"/><path d="M3.5 7v4c0 1.4 2.5 2.5 5.5 2.5s5.5-1.1 5.5-2.5V7"/><path d="M9.5 15.4c.9 1 2.9 1.6 5 1.6 3 0 5.5-1.1 5.5-2.5v-4c0-1.2-1.8-2.2-4.3-2.4"/><path d="M20 14.5v4c0 1.4-2.5 2.5-5.5 2.5S9 19.9 9 18.5v-3"/>',
+  chevron: '<path d="m6 9 6 6 6-6"/>',
+  linkedin:
+    '<rect x="3.5" y="3.5" width="17" height="17" rx="2.5"/><path d="M8 10.5V16M8 7.75v.01M11.5 16v-5.5M11.5 13c0-1.5 1-2.5 2.5-2.5s2.5 1 2.5 2.5v3"/>',
+  user: '<circle cx="12" cy="8.5" r="3.75"/><path d="M4.5 20c.8-3.6 3.8-5.75 7.5-5.75s6.7 2.15 7.5 5.75"/>',
 } as const;
 
 const { name, class: className = "", size = 24 } = Astro.props;

@@ -1,6 +1,7 @@
 ---
 import { site } from "../config/site";
 import FlowCompare from "./FlowCompare.astro";
+import Icon from "./Icon.astro";
 ---
 
 <section id="inicio" class="bg-ink pt-16 text-paper">
@@ -21,7 +22,16 @@ import FlowCompare from "./FlowCompare.astro";
           {site.hero.secondary}
         </a>
       </div>
-      <p class="mt-4 text-sm text-muted-dark">{site.hero.note}</p>
+      <ul class="mt-7 grid gap-2.5 text-[0.95rem] text-paper/90 sm:mt-8">
+        {
+          site.hero.trust.map((t) => (
+            <li class="flex items-center gap-2.5">
+              <Icon name="check" size={18} class="shrink-0 text-amber" />
+              {t}
+            </li>
+          ))
+        }
+      </ul>
     </div>
 
     <div class="mx-auto w-full max-w-md lg:max-w-none">

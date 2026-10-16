@@ -1,0 +1,86 @@
+---
+/**
+ * Quién te atiende + principios de trabajo. La confianza en una consultoría viene de las personas:
+ * mientras no haya foto o datos reales, se muestran marcadores visibles.
+ */
+import { site } from "../config/site";
+import Icon from "./Icon.astro";
+import Marked from "./Marked.astro";
+
+const t = site.team;
+---
+
+<section id="quien" class="border-t border-line bg-surface py-16 sm:py-24" aria-labelledby="quien-title">
+  <div class="mx-auto grid max-w-6xl gap-12 px-4 sm:px-6 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
+    <div>
+      <h2 id="quien-title" class="text-3xl leading-tight font-bold sm:text-4xl">{t.title}</h2>
+      <p class="mt-4 text-lg text-muted">{t.intro}</p>
+
+      {
+        t.people.map((person) => (
+          <article class="mt-8 rounded-xl border border-line bg-paper p-5 sm:p-6">
+            <div class="flex items-center gap-4">
+              {person.photo ? (
+                <img
+                  src={person.photo}
+                  alt={`Foto de ${person.name}`}
+                  width="88"
+                  height="88"
+                  loading="lazy"
+                  decoding="async"
+                  class="h-22 w-22 shrink-0 rounded-full object-cover"
+                />
+              ) : (
+                <div
+                  class="flex h-22 w-22 shrink-0 flex-col items-center justify-center rounded-full border-2 border-dashed border-amber bg-[#fff1d6] text-[#6b4a0e]"
+                  role="img"
+                  aria-label="Falta la foto"
+                >
+                  <Icon name="user" size={30} />
+                  <span class="mt-0.5 text-[0.7rem] font-semibold">[TU FOTO]</span>
+                </div>
+              )}
+              <div class="min-w-0">
+                <h3 class="text-xl font-semibold">
+                  <Marked text={person.name} />
+                </h3>
+                <p class="mt-1 text-muted">
+                  <Marked text={person.role} />
+                </p>
+              </div>
+            </div>
+            <p class="mt-5">
+              <Marked text={person.bio} />
+            </p>
+            {person.linkedin && (
+              <a href={person.linkedin} target="_blank" rel="noopener" class="link mt-4 inline-flex items-center gap-2 font-medium">
+                <Icon name="linkedin" size={20} />
+                Ver perfil en LinkedIn
+                <span class="sr-only">(se abre en una nueva pestaña)</span>
+              </a>
+            )}
+          </article>
+        ))
+      }
+    </div>
+
+    <div>
+      <h3 class="font-display text-lg font-semibold">{t.principlesTitle}</h3>
+      <ul class="mt-5 grid gap-x-8 gap-y-7 sm:grid-cols-2">
+        {
+          t.principles.map((pr) => (
+            <li class="flex gap-4 sm:block">
+              <span class="flex h-11 w-11 shrink-0 items-center justify-center rounded-lg bg-ink text-amber">
+                <Icon name={pr.icon} size={24} />
+              </span>
+              <div class="min-w-0">
+                <p class="font-display text-lg leading-snug font-semibold sm:mt-4">{pr.title}</p>
+                <p class="mt-1.5 text-muted sm:mt-2">{pr.text}</p>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

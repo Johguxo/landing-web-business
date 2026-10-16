@@ -25,14 +25,24 @@ Landing page de una sola página para **Operia** (nombre provisional). Astro + T
 
 ## Estructura de la página (orden fijo)
 
-1. Header fijo: logo, anclas (Problemas, Cómo trabajamos, Para quién) y botón "Agendar diagnóstico".
-2. Hero con el visual "Hoy vs Con Operia" (`FlowCompare.astro`).
-3. Problemas (6 tarjetas).
+1. Header fijo: logo, anclas (Problemas, Cómo trabajamos, Para quién) y botón "Agendar diagnóstico", siempre visible también en móvil.
+2. Hero con puntos de confianza (solo hechos verificables) y el visual "Hoy vs Con Operia" (`FlowCompare.astro`).
+3. Problemas como **checklist interactivo** de 6 casillas, con un contador que lleva a agendar.
 4. Cómo trabajamos (4 pasos numerados).
-5. Para quién (10 a 100 personas y 4 rubros).
-6. Retorno: tabla de ejemplo con valores entre corchetes.
-7. Agenda (`#agenda`): Calendly si hay `calendlyUrl`; si no, tarjeta con WhatsApp (mensaje prellenado) y correo.
-8. Footer: nombre, "Lima, Perú", razón social y año.
+5. Para quién (10 a 100 personas, 4 rubros) y "Probablemente no somos para ti si…".
+6. Retorno: vista previa de una propuesta (documento) con valores entre corchetes.
+7. Quién te atiende (`Team.astro`): persona real con foto, más 4 principios de trabajo.
+8. Preguntas frecuentes (`Faq.astro`, `<details>` nativo y JSON-LD FAQPage, sin las respuestas que tienen marcadores pendientes).
+9. Agenda (`#agenda`): qué pasa en los 30 minutos, más Calendly si hay `calendlyUrl`; si no, tarjeta con WhatsApp y correo.
+10. Footer: nombre, "Lima, Perú", razón social y año.
+
+Además, un botón flotante de WhatsApp (`StickyCta.astro`) que aparece después del hero y se oculta en la agenda y el footer. No agregar una barra inferior con "Agendar": duplicaría el botón del header.
+
+## Principios de conversión (por qué la página está armada así)
+
+- La confianza en una consultoría viene de **personas y transparencia**, no de adornos. Prioridad: quién atiende, qué pasa exactamente en la llamada y respuestas honestas a las objeciones (precio, cambiar el ERP, confidencialidad, equipo no técnico).
+- "No vendemos software" (independencia) es el argumento de confianza más fuerte: debe verse en el hero y en los principios.
+- Sin prueba social inventada. Cuando haya casos reales con permiso del cliente, agregarlos como sección propia, antes de "Quién te atiende".
 
 ## Comandos
 
@@ -49,3 +59,4 @@ Requiere Node ≥ 22.22.
 - `src/lib/images.ts` convierte el texto a trazos SVG con `opentype.js` y la fuente Sora de `src/assets/fonts/`. Así la imagen sale igual en macOS y en el servidor de build. No usar `toPathData()` de opentype.js 2.0: genera `NaN` al redondear, por eso hay un serializador propio.
 - Para cambiar el logo: `components/Logo.astro`, `public/favicon.svg` y `markSvg` en `src/lib/images.ts`.
 - Antes de publicar, buscar marcadores pendientes con `grep -rn "\[" src/config/site.ts`.
+- Para revisar a ancho móvil real, Chrome headless no baja de ~500 px: usar emulación por DevTools Protocol (`Emulation.setDeviceMetricsOverride`) o un iframe de 390 px.

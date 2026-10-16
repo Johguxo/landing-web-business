@@ -26,16 +26,18 @@ const hasCalendly = Boolean(calendlyUrl);
       <h2 id="agenda-title" class="text-3xl leading-tight font-bold sm:text-4xl">{b.title}</h2>
       <p class="mt-4 text-lg text-muted">{b.text}</p>
 
-      <ul class="mt-6 space-y-3">
+      <h3 class="mt-8 font-display text-lg font-semibold">{b.agendaTitle}</h3>
+      <ol class="mt-4 border-l-2 border-line">
         {
-          b.points.map((p) => (
-            <li class="flex gap-3">
-              <Icon name="check" size={22} class="mt-0.5 shrink-0 text-pine" />
-              <span>{p}</span>
+          b.agenda.map((step) => (
+            <li class="relative pb-5 pl-6 last:pb-0">
+              <span class="absolute top-1.5 -left-[7px] h-3 w-3 rounded-full border-2 border-surface bg-amber" aria-hidden="true" />
+              <p class="text-sm font-semibold text-pine tabular-nums">{step.time}</p>
+              <p class="mt-1">{step.text}</p>
             </li>
           ))
         }
-      </ul>
+      </ol>
 
       {
         hasCalendly && (

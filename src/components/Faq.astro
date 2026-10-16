@@ -1,0 +1,44 @@
+---
+import { site } from "../config/site";
+import Icon from "./Icon.astro";
+import Marked from "./Marked.astro";
+
+const f = site.faq;
+
+// Datos estructurados para Google (FAQPage). Se omiten respuestas con marcadores pendientes.
+const ld = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: f.items
+    .filter((i) => !i.a.includes("["))
+    .map((i) => ({ "@type": "Question", name: i.q, acceptedAnswer: { "@type": "Answer", text: i.a } })),
+};
+---
+
+<section id="preguntas" class="border-t border-line py-16 sm:py-24" aria-labelledby="faq-title">
+  <div class="mx-auto grid max-w-6xl gap-10 px-4 sm:px-6 lg:grid-cols-[0.7fr_1.3fr] lg:gap-16">
+    <h2 id="faq-title" class="text-3xl leading-tight font-bold sm:text-4xl">{f.title}</h2>
+
+    <div class="divide-y divide-line border-y border-line">
+      {
+        f.items.map((item) => (
+          <details class="group">
+            <summary class="flex min-h-14 cursor-pointer list-none items-center justify-between gap-4 py-5 font-display text-lg leading-snug font-semibold hover:text-pine [&::-webkit-details-marker]:hidden">
+              {item.q}
+              <Icon
+                name="chevron"
+                size={22}
+                class="shrink-0 text-pine transition-transform duration-200 group-open:rotate-180 motion-reduce:transition-none"
+              />
+            </summary>
+            <p class="max-w-2xl pb-6 text-muted">
+              <Marked text={item.a} />
+            </p>
+          </details>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<script type="application/ld+json" set:html={JSON.stringify(ld)} />

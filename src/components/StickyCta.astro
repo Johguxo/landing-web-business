@@ -1,0 +1,61 @@
+---
+/**
+ * Botón flotante de WhatsApp (el header fijo ya mantiene visible "Agendar diagnóstico").
+ * Aparece al pasar el hero y se oculta cuando la sección de agenda o el footer están en pantalla.
+ */
+import { site, whatsappHref } from "../config/site";
+import Icon from "./Icon.astro";
+---
+
+<a
+  href={whatsappHref()}
+  target="_blank"
+  rel="noopener"
+  class="floating-wa fixed right-4 z-40 flex h-14 items-center gap-2 rounded-full bg-pine pr-5 pl-4 font-display font-semibold text-paper shadow-[0_8px_24px_-6px_rgba(16,33,29,0.55)] hover:bg-[#0c4d40] sm:right-6"
+  data-floating-wa
+  data-hidden="true"
+  data-track="click_whatsapp_flotante"
+  tabindex="-1"
+  aria-hidden="true"
+>
+  <Icon name="whatsapp" size={24} />
+  <span>{site.stickyCta.whatsappLabel.replace("Escribir por ", "")}</span>
+  <span class="sr-only">: {site.stickyCta.whatsappLabel} (se abre en una nueva pestaña)</span>
+</a>
+
+<script>
+  const btn = document.querySelector<HTMLElement>("[data-floating-wa]");
+  const hero = document.getElementById("inicio");
+  const stops = [document.getElementById("agenda"), document.querySelector("footer")].filter(Boolean) as Element[];
+  if (btn && hero && "IntersectionObserver" in window) {
+    const visible = new Map<Element, boolean>([[hero, true]]);
+    const render = () => {
+      const hidden = visible.get(hero) !== false || stops.some((el) => visible.get(el));
+      btn.dataset.hidden = String(hidden);
+      btn.setAttribute("tabindex", hidden ? "-1" : "0");
+      btn.setAttribute("aria-hidden", String(hidden));
+    };
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => visible.set(e.target, e.isIntersecting));
+      render();
+    });
+    [hero, ...stops].forEach((el) => io.observe(el));
+  }
+</script>
+
+<style>
+  .floating-wa {
+    bottom: calc(1rem + env(safe-area-inset-bottom));
+    transition: transform 250ms ease-out, opacity 250ms ease-out, background-color 150ms ease;
+  }
+  .floating-wa[data-hidden="true"] {
+    transform: translateY(1.5rem);
+    opacity: 0;
+    pointer-events: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .floating-wa {
+      transition: none;
+    }
+  }
+</style>

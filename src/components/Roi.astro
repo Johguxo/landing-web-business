@@ -1,8 +1,13 @@
 ---
+/**
+ * Retorno: se muestra como vista previa de la propuesta que recibe el cliente (un documento),
+ * para que el compromiso "ahorro estimado + recuperación" se vea tangible.
+ */
 import { site } from "../config/site";
 import Marked from "./Marked.astro";
 
 const r = site.roi;
+const metricCols = r.columns.slice(1);
 ---
 
 <section class="bg-ink py-16 text-paper sm:py-24" aria-labelledby="retorno-title">
@@ -12,41 +17,56 @@ const r = site.roi;
       <p class="mt-4 text-lg text-muted-dark">{r.text}</p>
     </div>
 
-    <!-- Móvil: una ficha por proceso -->
-    <ul class="mt-10 space-y-3 md:hidden">
-      {
-        r.rows.map((row) => (
-          <li class="rounded-lg border border-line-dark bg-ink-2 p-4">
-            <p class="font-display font-semibold">{row[0]}</p>
-            <dl class="mt-3 grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-              {row.slice(1).map((cell, j) => (
-                <div>
-                  <dt class="text-muted-dark">{r.columns[j + 1]}</dt>
-                  <dd class="mt-0.5 font-medium text-paper"><Marked text={cell} /></dd>
-                </div>
-              ))}
-            </dl>
-          </li>
-        ))
-      }
-    </ul>
+    <figure class="mt-10 overflow-hidden rounded-xl bg-surface text-ink shadow-[0_24px_60px_-20px_rgba(0,0,0,0.6)]">
+      <!-- Encabezado del documento -->
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-line px-5 py-4 sm:px-8 sm:py-5">
+        <div class="flex items-center gap-3">
+          <svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+            <rect width="32" height="32" rx="7" fill="#10211D"></rect>
+            <path d="M8 11h7l3 5-3 5H8" fill="none" stroke="#E8A33D" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path d="M18 16h6" stroke="#F3F4F1" stroke-width="2.6" stroke-linecap="round"></path>
+          </svg>
+          <p class="font-display font-semibold">{r.docTitle}</p>
+        </div>
+        <span class="rounded-full border border-line px-3 py-1 text-sm text-muted">{r.docLabel}</span>
+      </div>
 
-    <!-- Escritorio: tabla -->
-    <div class="mt-10 hidden overflow-hidden rounded-xl border border-line-dark md:block">
-      <table class="w-full text-left text-[0.95rem]">
+      <!-- Móvil: solo las dos cifras clave por proceso (ahorro y recuperación) -->
+      <div class="md:hidden">
+        <div class="flex justify-between gap-4 border-b border-line px-5 py-2.5 text-xs text-muted">
+          <span>{r.columns[0]}</span>
+          <span>{r.columns[3]} · {r.columns[5]}</span>
+        </div>
+        <ul class="divide-y divide-line">
+          {
+            [...r.rows.map((row) => ({ name: row[0], save: row[3], back: row[5], total: false })), { name: r.totalLabel, save: r.total[2], back: r.total[4], total: true }].map((item) => (
+              <li class:list={["flex items-center justify-between gap-4 px-5 py-3.5", item.total && "bg-paper font-semibold"]}>
+                <span class:list={["min-w-0", item.total ? "font-display" : "font-medium"]}>{item.name}</span>
+                <span class="shrink-0 text-right text-sm tabular-nums">
+                  <span class="block"><Marked text={item.save} /></span>
+                  <span class="mt-0.5 block text-muted"><Marked text={item.back} /></span>
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Escritorio: tabla -->
+      <table class="hidden w-full text-left text-[0.95rem] tabular-nums md:table">
         <caption class="sr-only">{r.caption}</caption>
-        <thead class="bg-ink-2 text-muted-dark">
-          <tr>
-            {r.columns.map((c) => <th scope="col" class="px-5 py-3.5 font-medium">{c}</th>)}
+        <thead class="text-sm text-muted">
+          <tr class="border-b border-line">
+            {r.columns.map((c, i) => <th scope="col" class:list={["py-3.5 font-medium", i === 0 ? "pr-4 pl-8" : "px-4", i === r.columns.length - 1 && "pr-8"]}>{c}</th>)}
           </tr>
         </thead>
-        <tbody class="divide-y divide-line-dark">
+        <tbody class="divide-y divide-line">
           {
             r.rows.map((row) => (
               <tr>
-                <th scope="row" class="px-5 py-4 font-medium">{row[0]}</th>
-                {row.slice(1).map((cell) => (
-                  <td class="px-5 py-4">
+                <th scope="row" class="py-4 pr-4 pl-8 font-medium">{row[0]}</th>
+                {row.slice(1).map((cell, j) => (
+                  <td class:list={["px-4 py-4", j === row.length - 2 && "pr-8"]}>
                     <Marked text={cell} />
                   </td>
                 ))}
@@ -54,8 +74,20 @@ const r = site.roi;
             ))
           }
         </tbody>
+        <tfoot class="border-t-2 border-ink bg-paper font-semibold">
+          <tr>
+            <th scope="row" class="py-4 pr-4 pl-8 font-display">{r.totalLabel}</th>
+            {
+              r.total.map((cell, j) => (
+                <td class:list={["px-4 py-4", j === r.total.length - 1 && "pr-8"]}>
+                  <Marked text={cell} />
+                </td>
+              ))
+            }
+          </tr>
+        </tfoot>
       </table>
-    </div>
+    </figure>
 
     <p class="mt-4 text-sm text-muted-dark">{r.caption}</p>
 
