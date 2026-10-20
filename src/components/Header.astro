@@ -6,7 +6,7 @@ import Icon from "./Icon.astro";
 
 <header class="fixed inset-x-0 top-0 z-50 border-b border-line-dark bg-ink text-paper">
   <div class="mx-auto flex h-16 max-w-6xl items-center justify-between gap-4 px-4 sm:px-6">
-    <a href="#inicio" class="rounded" aria-label={`${site.name}, ir al inicio`}>
+    <a href="/#inicio" class="rounded" aria-label={`${site.name}, ir al inicio`}>
       <Logo />
     </a>
 
@@ -15,7 +15,7 @@ import Icon from "./Icon.astro";
         {
           site.nav.map((item) => (
             <li>
-              <a href={item.href} class="text-muted-dark transition-colors hover:text-paper">
+              <a href={`/${item.href}`} class="text-muted-dark transition-colors hover:text-paper">
                 {item.label}
               </a>
             </li>
@@ -25,7 +25,7 @@ import Icon from "./Icon.astro";
     </nav>
 
     <div class="flex items-center gap-2">
-      <a href="#agenda" class="btn-primary !min-h-10 !px-4 !py-2 text-sm sm:text-base" data-track="click_agendar_header">
+      <a href="/#agenda" class="btn-primary !min-h-10 !px-4 !py-2 text-sm sm:text-base" data-track="click_agendar_header">
         {site.cta.header}
       </a>
 
@@ -45,7 +45,7 @@ import Icon from "./Icon.astro";
             {
               site.nav.map((item) => (
                 <li>
-                  <a href={item.href} class="block rounded-md px-3 py-3 text-paper hover:bg-ink">
+                  <a href={`/${item.href}`} class="block rounded-md px-3 py-3 text-paper hover:bg-ink">
                     {item.label}
                   </a>
                 </li>

@@ -9,11 +9,12 @@ import { readFileSync } from "node:fs";
 import opentype from "opentype.js";
 import sharp from "sharp";
 import { site } from "../config/site";
+import { markInner, markSvg } from "./logo";
 
-const INK = "#10211D";
-const PAPER = "#F3F4F1";
+const INK = "#0E1B2E";
+const PAPER = "#F4F6FA";
 const AMBER = "#E8A33D";
-const MUTED = "#B5C3BC";
+const MUTED = "#AAB6C8";
 
 const fontsDir = path.join(process.cwd(), "src/assets/fonts");
 const loadFont = (file: string) => {
@@ -64,15 +65,10 @@ function textPath(
   return { svg: `<path d="${d}" fill="${fill}"/>`, lines: lines.length };
 }
 
-const markSvg = (size: number) => `
-<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="7" fill="${INK}"/>
-  <path d="M8 11h7l3 5-3 5H8" fill="none" stroke="${AMBER}" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/>
-  <path d="M18 16h6" stroke="${PAPER}" stroke-width="2.6" stroke-linecap="round"/>
-</svg>`;
+
 
 export async function iconPng(size: number): Promise<Buffer> {
-  return sharp(Buffer.from(markSvg(size))).png().toBuffer();
+  return sharp(Buffer.from(markSvg({ size }))).png().toBuffer();
 }
 
 export async function ogImagePng(): Promise<Buffer> {
@@ -80,10 +76,9 @@ export async function ogImagePng(): Promise<Buffer> {
   const H = 630;
   const pad = 80;
   const bold = loadFont("Sora-Bold.ttf");
-  const semibold = loadFont("Sora-SemiBold.ttf");
   const regular = loadFont("Sora-Regular.ttf");
 
-  const name = textPath(semibold, site.name, { x: pad + 64, y: pad + 30, size: 36, fill: PAPER });
+  const name = textPath(bold, site.name, { x: pad + 76, y: pad + 30, size: 42, fill: PAPER });
 
   // Titular: reduce el tamaño si el texto es largo, para que quepa en 3 líneas.
   let size = 68;
@@ -106,11 +101,7 @@ export async function ogImagePng(): Promise<Buffer> {
   const svg = `
 <svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   <rect width="${W}" height="${H}" fill="${INK}"/>
-  <g transform="translate(${pad} ${pad - 10})">
-    <rect x="1" y="1" width="46" height="46" rx="11" fill="none" stroke="${PAPER}" stroke-width="2.5"/>
-    <path d="M12 16.5h10.5l4.5 7.5-4.5 7.5H12" fill="none" stroke="${AMBER}" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/>
-    <path d="M27 24h9" stroke="${PAPER}" stroke-width="3.6" stroke-linecap="round"/>
-  </g>
+  <g transform="translate(${pad - 2} ${pad - 26})">${markInner("light")}</g>
   ${name.svg}
   ${tagline.svg}
   <rect x="${pad}" y="${H - pad - 6}" width="96" height="6" rx="3" fill="${AMBER}"/>

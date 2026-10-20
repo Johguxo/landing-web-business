@@ -1,0 +1,10 @@
+# Rutas de la plataforma anterior de LinkUs (deprecada): redirigen al inicio. Equivalente a vercel.json para Netlify.
+/registro          /  301
+/login             /  301
+/forgot-password   /  301
+/reset-password    /  301
+/select-company    /  301
+/conexiones        /  301
+/cliente/*         /  301
+/proveedor/*       /  301
+/chat/*            /  301

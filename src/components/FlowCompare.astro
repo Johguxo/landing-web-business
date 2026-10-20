@@ -31,7 +31,7 @@ const last = nodes[nodes.length - 1];
 {
   variant === "before" ? (
     <svg viewBox={`0 0 180 ${H}`} class="h-auto w-full overflow-visible" role="presentation" aria-hidden="true">
-      <g fill="none" stroke="#7E948C" stroke-width="1.6" stroke-dasharray="5 5" stroke-linecap="round">
+      <g fill="none" stroke="#7F8FA8" stroke-width="1.6" stroke-dasharray="5 5" stroke-linecap="round">
         {links.map((d) => <path d={d} />)}
         {/* retrocesos: el dato vuelve atrás para confirmarse */}
         <path d={`M${last.x - 52} ${last.y} C -14 ${last.y - 120}, -14 ${first.y + 120}, ${first.x - 52} ${first.y}`} stroke="#E8A33D" stroke-opacity="0.85" />
@@ -43,8 +43,8 @@ const last = nodes[nodes.length - 1];
       </g>
       {nodes.map((p) => (
         <g transform={`rotate(${p.r} ${p.x} ${p.y})`}>
-          <rect x={p.x - 50} y={p.y - 18} width="100" height="36" rx="6" fill="#10211D" stroke="#5F7A71" stroke-width="1.5" stroke-dasharray="4 3" />
-          <text x={p.x} y={p.y + 6} text-anchor="middle" font-size="16" class="font-sans" fill="#D7DFDA">
+          <rect x={p.x - 50} y={p.y - 18} width="100" height="36" rx="6" fill="#0E1B2E" stroke="#4A5D78" stroke-width="1.5" stroke-dasharray="4 3" />
+          <text x={p.x} y={p.y + 6} text-anchor="middle" font-size="16" class="font-sans" fill="#D5DCE6">
             {p.label}
           </text>
         </g>
@@ -55,10 +55,10 @@ const last = nodes[nodes.length - 1];
       <line x1="90" y1={ys[0]} x2="90" y2={ys[ys.length - 1]} stroke="#E8A33D" stroke-width="2.5" class="flow-line" style={`--len:${ys[ys.length - 1] - ys[0]}`} />
       {steps.map((label, i) => (
         <g class="flow-node" style={`--i:${i}`}>
-          <rect x="4" y={ys[i] - 19} width="172" height="38" rx="8" fill="#10211D" stroke="#8FC9B8" stroke-width="1.5" />
+          <rect x="4" y={ys[i] - 19} width="172" height="38" rx="8" fill="#0E1B2E" stroke="#7FB2FF" stroke-width="1.5" />
           <circle cx="24" cy={ys[i]} r="7" fill="#E8A33D" />
-          <path d={`M20.5 ${ys[i]} l2.5 2.5 l4.5 -5`} fill="none" stroke="#10211D" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
-          <text x="100" y={ys[i] + 6} text-anchor="middle" font-size="16" class="font-sans" font-weight="500" fill="#F3F4F1">
+          <path d={`M20.5 ${ys[i]} l2.5 2.5 l4.5 -5`} fill="none" stroke="#0E1B2E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+          <text x="100" y={ys[i] + 6} text-anchor="middle" font-size="16" class="font-sans" font-weight="500" fill="#F4F6FA">
             {label}
           </text>
         </g>

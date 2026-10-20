@@ -22,7 +22,7 @@ const b = site.beforeAfter;
           <figure
             class:list={[
               "flex flex-col gap-6 rounded-xl border p-3 sm:p-6 lg:flex-row lg:items-center lg:gap-10",
-              variant === "before" ? "border-line-dark bg-ink-2/60" : "border-pine bg-pine/25",
+              variant === "before" ? "border-line-dark bg-ink-2/60" : "border-brand bg-brand/25",
             ]}
           >
             <div class="lg:w-[220px] lg:shrink-0">
@@ -41,7 +41,7 @@ const b = site.beforeAfter;
                     {variant === "before" ? (
                       <Icon name="close" size={18} class="mt-0.5 shrink-0 text-[#E8A33D]" />
                     ) : (
-                      <Icon name="check" size={18} class="mt-0.5 shrink-0 text-pine-light" />
+                      <Icon name="check" size={18} class="mt-0.5 shrink-0 text-brand-light" />
                     )}
                     <span class:list={[variant === "before" ? "text-muted-dark" : "text-paper"]}>{pt}</span>
                   </li>

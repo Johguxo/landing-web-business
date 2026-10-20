@@ -4,6 +4,11 @@ import { Font } from "astro:assets";
 import { site } from "../config/site";
 import Analytics from "../components/Analytics.astro";
 
+interface Props {
+  /** Excluye la página de los buscadores (ej. 404). */
+  noindex?: boolean;
+}
+const { noindex = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const ogImage = new URL("/og-image.png", site.url).href;
 const { title, description } = site.seo;
@@ -17,7 +22,8 @@ const { title, description } = site.seo;
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    <meta name="theme-color" content="#10211D" />
+    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="theme-color" content="#0E1B2E" />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />

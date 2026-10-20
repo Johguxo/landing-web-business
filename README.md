@@ -1,4 +1,4 @@
-# Landing page de Operia
+# Landing page de LinkUs
 
 Sitio estático de una sola página hecho con [Astro](https://astro.build) y Tailwind CSS. Su único objetivo es que el visitante agende un diagnóstico gratuito de 30 minutos.
 
@@ -33,9 +33,9 @@ Todo lo que aparece **entre corchetes**, como `[TU NÚMERO]`, es un dato pendien
 | Campo                      | Qué poner                                                                              |
 | -------------------------- | -------------------------------------------------------------------------------------- |
 | `name`                     | Nombre comercial. Se actualiza en logo, títulos, textos e imagen para redes.           |
-| `legalName`                | Razón social para el footer (ej. `Operia S.A.C.`).                                      |
+| `legalName`                | Razón social para el footer (ej. `LinkUs S.A.C.`).                                      |
 | `ruc`                      | Opcional. Si lo completas, aparece en el footer.                                        |
-| `url`                      | Tu dominio final, ej. `https://www.operia.pe`. Se usa en sitemap, canonical y Open Graph. |
+| `url`                      | Dominio final (`https://www.linkus.pe`). Se usa en sitemap, canonical y Open Graph. |
 | `contact.email`            | Correo de contacto.                                                                     |
 | `contact.whatsapp`         | Número con código de país, **solo dígitos**: `51987654321`.                             |
 | `contact.whatsappMessage`  | Mensaje que aparece ya escrito al abrir WhatsApp.                                       |
@@ -44,7 +44,7 @@ Todo lo que aparece **entre corchetes**, como `[TU NÚMERO]`, es un dato pendien
 | `seo.ogTagline`            | Frase grande de la imagen que se ve al compartir por WhatsApp o LinkedIn.               |
 | `analytics.ga4Id`          | ID de Google Analytics 4 (`G-XXXXXXXXXX`). Vacío = desactivado.                         |
 | `analytics.metaPixelId`    | ID de Meta Pixel (solo números). Vacío = desactivado.                                   |
-| `team.people`              | **Quién está detrás**: nombre, cargo, foto, experiencia y LinkedIn. Es el elemento que más confianza genera. |
+| `team.people`              | **Quiénes están detrás** (los dos socios): nombre, cargo, foto, experiencia y LinkedIn. Es el elemento que más confianza genera. |
 | `why.tech`                 | Herramientas con las que trabajas (se muestran como nombres, sin logos). |
 | `roi`                      | Ejemplo ilustrativo de retorno (empresa ficticia). Si cambias las cifras, mantén coherentes los totales y las fórmulas. |
 | `booking.form`             | Textos del formulario final. Al enviarlo, abre WhatsApp con nombre, empresa y proceso ya escritos. |
@@ -53,7 +53,7 @@ Todo lo que aparece **entre corchetes**, como `[TU NÚMERO]`, es un dato pendien
 
 ### Foto del equipo
 
-Guarda la foto en `public/equipo/` (cuadrada, mínimo 600×600 px, en `.jpg` o `.webp`, idealmente de menos de 150 KB) y pon la ruta en `team.people[0].photo`, por ejemplo `"/equipo/erick-villanueva.jpg"`. Una foto real, con buena luz y de frente, vale más que cualquier logo. Para agregar más personas, añade otro objeto al arreglo `people`.
+Guarda la foto en `public/equipo/` (cuadrada, mínimo 600×600 px, en `.jpg` o `.webp`, idealmente de menos de 150 KB) y pon la ruta en `photo` de cada socio en `team.people`, por ejemplo `"/equipo/erick-villanueva.jpg"` y `"/equipo/johann-gonzales.jpg"`. Una foto real, con buena luz y de frente, vale más que cualquier logo. Para agregar más personas, añade otro objeto al arreglo `people`.
 
 ### Calendly
 
@@ -69,9 +69,18 @@ Con la analítica activa, los clics de contacto se registran como eventos: `clic
 
 > Si activas analítica, revisa tus obligaciones de aviso de privacidad según la Ley N.º 29733 de Protección de Datos Personales.
 
+### Migración desde la plataforma anterior de LinkUs
+
+`linkus.pe` servía antes la plataforma (proyecto `linkus-frontend` en Vercel). Para publicar esta landing en el mismo dominio:
+
+1. En Vercel, entra al proyecto anterior → **Settings → Domains** y quita `linkus.pe` y `www.linkus.pe`. Si ya no lo usarás, pausa o elimina ese proyecto.
+2. En el proyecto de esta landing, agrega `linkus.pe` y `www.linkus.pe` (ver la sección 4). Como el dominio ya apunta a Vercel, normalmente no hay que tocar el DNS.
+3. Las rutas antiguas (`/registro`, `/login`, `/cliente/...`, `/proveedor/...`) redirigen al inicio con `vercel.json`; en Netlify, con `public/_redirects`.
+4. Actualiza la descripción de la página de LinkedIn para que coincida con el nuevo mensaje.
+
 ### Imagen para redes y favicon
 
-`og-image.png`, `favicon.png` y `apple-touch-icon.png` se generan automáticamente en cada build a partir del nombre y la frase de `site.ts`. El código está en `src/lib/images.ts`. El favicon vectorial está en `public/favicon.svg`; si cambias el logo, actualízalo también ahí y en `src/components/Logo.astro`.
+`og-image.png`, `favicon.png` y `apple-touch-icon.png` se generan automáticamente en cada build a partir del nombre y la frase de `site.ts`. El código está en `src/lib/images.ts`. El logo (dos engranajes unidos por un eslabón) está en `src/lib/logo.ts`, que es la única fuente: si lo cambias ahí, se actualizan el header, el footer, el favicon y la imagen para redes.
 
 ---
 
@@ -80,7 +89,7 @@ Con la analítica activa, los clics de contacto se registran como eventos: `clic
 1. Sube el proyecto a un repositorio de GitHub (puede ser privado).
 2. Entra a [vercel.com](https://vercel.com), inicia sesión con GitHub y haz clic en **Add New → Project**.
 3. Elige el repositorio. Vercel detecta Astro solo; no cambies nada y haz clic en **Deploy**.
-4. En uno o dos minutos tendrás una URL tipo `operia.vercel.app`.
+4. En uno o dos minutos tendrás una URL tipo `linkus-landing.vercel.app`.
 
 Cada vez que hagas `git push` a la rama principal, Vercel vuelve a publicar automáticamente.
 
@@ -96,8 +105,8 @@ Los dominios `.pe` y `.com.pe` se registran a través de los registradores acred
 
 ### Apuntarlo a Vercel
 
-1. En Vercel, entra al proyecto → **Settings → Domains** → escribe tu dominio (ej. `operia.pe`) → **Add**.
-2. Agrega también `www.operia.pe` y elige cuál será el principal; el otro redirige automáticamente.
+1. En Vercel, entra al proyecto → **Settings → Domains** → escribe `linkus.pe` → **Add**.
+2. Agrega también `www.linkus.pe` y elígelo como principal; el otro redirige automáticamente.
 3. Vercel te muestra los registros DNS que debes crear. Normalmente son:
 
    | Tipo    | Nombre | Valor                  |
@@ -112,7 +121,7 @@ Los dominios `.pe` y `.com.pe` se registran a través de los registradores acred
 
 ### Último paso
 
-Cambia `url` en `src/config/site.ts` a tu dominio final (ej. `https://operia.pe`) y vuelve a publicar. Así el sitemap, la URL canónica y la imagen para redes apuntan al dominio correcto.
+`url` en `src/config/site.ts` ya apunta a `https://www.linkus.pe`; si cambias de dominio, actualízalo y vuelve a publicar. Así el sitemap, la URL canónica y la imagen para redes apuntan al dominio correcto.
 
 Para comprobar cómo se ve el enlace al compartirlo, usa el [Post Inspector de LinkedIn](https://www.linkedin.com/post-inspector/) o el [depurador de Meta](https://developers.facebook.com/tools/debug/). WhatsApp guarda en caché la vista previa, así que los cambios pueden tardar en reflejarse.
 

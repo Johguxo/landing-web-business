@@ -1,18 +1,21 @@
 @import "tailwindcss";
 
 @theme {
-  --color-ink: #10211d;
-  --color-ink-2: #183029;
-  --color-paper: #f3f4f1;
+  /* Paleta tomada del logo de LinkUs (azules) + ámbar como acento para los botones. */
+  --color-ink: #0e1b2e;
+  --color-ink-2: #172840;
+  --color-paper: #f4f6fa;
   --color-surface: #ffffff;
   --color-amber: #e8a33d;
   --color-amber-hover: #f0b458;
-  --color-pine: #0f5c4d;
-  --color-pine-light: #8fc9b8;
-  --color-line: #d8ddd6;
-  --color-line-dark: #2c443d;
-  --color-muted: #48564f;
-  --color-muted-dark: #b5c3bc;
+  --color-brand: #0458ca;
+  --color-brand-dark: #063d90;
+  --color-brand-light: #7fb2ff;
+  --color-brand-tint: #e8f0fc;
+  --color-line: #d9dfe8;
+  --color-line-dark: #263955;
+  --color-muted: #4a5568;
+  --color-muted-dark: #aab6c8;
 
   /* Las variables --font-sora y --font-plex las define Astro (ver "fonts" en astro.config.mjs). */
   --font-display: var(--font-sora);
@@ -108,7 +111,7 @@
   }
 
   .link {
-    color: var(--color-pine);
+    color: var(--color-brand);
     text-decoration: underline;
     text-decoration-thickness: 1px;
     text-underline-offset: 3px;

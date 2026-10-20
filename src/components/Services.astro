@@ -17,7 +17,7 @@ const s = site.services;
         s.areas.map((area) => (
           <li class="bg-surface p-5 sm:p-7">
             <div class="flex items-center gap-3">
-              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-[#EAF2EF] text-pine">
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-brand-tint text-brand">
                 <Icon name={area.icon} size={22} />
               </span>
               <h3 class="text-xl font-semibold">{area.title}</h3>
@@ -25,7 +25,7 @@ const s = site.services;
             <ul class="mt-4 space-y-2">
               {area.items.map((item) => (
                 <li class="flex gap-2.5">
-                  <Icon name="check" size={18} class="mt-1 shrink-0 text-pine" />
+                  <Icon name="check" size={18} class="mt-1 shrink-0 text-brand" />
                   <span>{item}</span>
                 </li>
               ))}

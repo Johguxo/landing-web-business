@@ -1,0 +1,14 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    { "source": "/registro", "destination": "/", "permanent": true },
+    { "source": "/login", "destination": "/", "permanent": true },
+    { "source": "/forgot-password", "destination": "/", "permanent": true },
+    { "source": "/reset-password", "destination": "/", "permanent": true },
+    { "source": "/select-company", "destination": "/", "permanent": true },
+    { "source": "/conexiones", "destination": "/", "permanent": true },
+    { "source": "/cliente/:path*", "destination": "/", "permanent": true },
+    { "source": "/proveedor/:path*", "destination": "/", "permanent": true },
+    { "source": "/chat/:path*", "destination": "/", "permanent": true }
+  ]
+}

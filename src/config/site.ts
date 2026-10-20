@@ -4,27 +4,29 @@
  * Los valores entre corchetes [ ] son marcadores pendientes: reemplázalos por datos reales.
  */
 
-const name = "Operia";
+const name = "LinkUs";
 
 export const site = {
   /** Nombre comercial. Se usa en el logo, títulos, textos y la imagen para redes. */
   name,
+  /** Subtítulo de marca: acompaña al nombre en el footer, el título de la página y la imagen para redes. */
+  tagline: "Soluciones digitales",
   /** Razón social que aparece en el footer. */
-  legalName: "[RAZÓN SOCIAL S.A.C.]",
+  legalName: name,
   /** RUC (opcional). Déjalo vacío para no mostrarlo. */
   ruc: "",
   city: "Lima, Perú",
 
   /**
    * Dominio final, sin barra al final. Se usa para el sitemap, la URL canónica y Open Graph.
-   * Debe ser una URL válida; cámbiala por tu dominio real (ej. https://www.tuempresa.pe).
+   * Debe ser una URL válida.
    */
-  url: "https://tu-dominio.pe",
+  url: "https://www.linkus.pe",
 
   contact: {
-    email: "[TU CORREO]",
+    email: "linkusempresarial@gmail.com",
     /** Número de WhatsApp con código de país, solo dígitos. Ej: 51987654321 */
-    whatsapp: "[TU NÚMERO]",
+    whatsapp: "51954604517",
     /** Mensaje que aparece escrito al abrir WhatsApp. */
     whatsappMessage: `Hola, vi la web de ${name} y quiero agendar la llamada de 30 minutos para descubrir qué automatizar primero.`,
     /**
@@ -32,16 +34,18 @@ export const site = {
      * Si lo dejas vacío, la sección final muestra solo el formulario, WhatsApp y correo.
      */
     calendlyUrl: "",
+    /** Página de empresa en LinkedIn. Vacío = no se muestra. */
+    linkedin: "",
   },
 
   seo: {
-    title: `${name} | Automatización y procesos conectados para empresas en crecimiento`,
+    title: `${name} | Soluciones digitales y automatización de procesos`,
     description:
       "Automatizamos y conectamos ventas, inventario, compras y finanzas con las herramientas que ya usas. Descubre en 30 minutos qué automatizar primero.",
     /** Texto corto que acompaña al nombre en la imagen para compartir (og-image.png). */
     ogTagline: "Tu empresa corre en Excel y WhatsApp. Hagamos que corra sola.",
     /** Línea inferior de la imagen para compartir. */
-    ogFooter: "Digitalización operativa para empresas en crecimiento, Lima",
+    ogFooter: "Soluciones digitales · linkus.pe",
   },
 
   /**
@@ -269,21 +273,29 @@ export const site = {
     ],
   },
 
-  /** Quién está detrás. */
+  /** Quiénes están detrás: los socios. Una consultoría se elige por las personas. */
   team: {
-    title: "Quién está detrás",
+    title: "Quiénes están detrás",
+    intro:
+      "Dos socios con perfiles complementarios: uno viene de la operación y la gestión, el otro de la ingeniería y el software. Combinamos procesos, tecnología y gestión para que la automatización genere resultados medibles.",
     people: [
       {
         name: "Erick Villanueva",
-        role: "Fundador · Ingeniero Mecánico + MBA",
-        /** Ruta de la foto dentro de public/, ej. "/equipo/erick-villanueva.jpg" (cuadrada, mín. 600×600). Vacío = marcador. */
-        photo: "",
-        bio: [
-          "Más de [X] años trabajando con empresas B2B e industriales, ayudando a transformar necesidades operativas en soluciones de negocio.",
-          "Combinamos conocimiento de procesos, tecnología y gestión para que la automatización genere resultados medibles.",
-        ],
+        role: "Socio fundador · Procesos y negocio",
+        credentials: "Ingeniero Mecánico · MBA",
+        /** Ruta de la foto dentro de public/, ej. "/equipo/erick-villanueva.jpg" (cuadrada, 400×400 en .webp). Vacío = marcador. */
+        photo: "/equipo/erick-villanueva.webp",
+        bio: "Más de 9 años trabajando con empresas B2B e industriales, traduciendo necesidades operativas en soluciones de negocio. Se asegura de que cada automatización ataque un problema real y tenga un retorno medible.",
         /** Perfil de LinkedIn (opcional). Vacío = no se muestra. */
-        linkedin: "",
+        linkedin: "https://www.linkedin.com/in/erickvillanuevaq/",
+      },
+      {
+        name: "Johann Gonzales",
+        role: "Socio fundador · Tecnología y software",
+        credentials: "Ingeniero Mecatrónico · Senior Software Developer · Diplomado en Gerencia de TI",
+        photo: "/equipo/johann-gonzales.webp",
+        bio: "Más de 8 años construyendo software. Diseña las integraciones que conectan tu ERP, CRM, WhatsApp y Power BI, y aplica inteligencia artificial para automatizar tareas y sacar provecho de tu información, con la solidez de un desarrollo profesional y el criterio de gestión de TI.",
+        linkedin: "https://www.linkedin.com/in/johann-gustavo-gonzales-inca-001a0b175/",
       },
     ],
   },
@@ -346,6 +358,13 @@ export const site = {
     calendarFallback: "Abrir el calendario en una pestaña nueva",
   },
 
+  /** Página 404 (también la ven quienes lleguen con enlaces de la plataforma anterior no redirigidos). */
+  notFound: {
+    title: "Esta página ya no existe",
+    text: `${name} evolucionó: ahora ayudamos a empresas en crecimiento a conectar y automatizar su operación.`,
+    cta: "Ir al inicio",
+  },
+
   /** Botón flotante de WhatsApp (aparece al bajar de la portada). */
   stickyCta: {
     whatsappLabel: "Escribir por WhatsApp",
@@ -357,6 +376,14 @@ export function whatsappHref(): string {
   const digits = site.contact.whatsapp.replace(/\D/g, "");
   const text = encodeURIComponent(site.contact.whatsappMessage);
   return digits ? `https://wa.me/${digits}?text=${text}` : `https://wa.me/?text=${text}`;
+}
+
+/** Número de WhatsApp legible, ej. "+51 954 604 517". */
+export function whatsappDisplay(): string {
+  const d = site.contact.whatsapp.replace(/\D/g, "");
+  if (!d) return site.contact.whatsapp;
+  const local = d.startsWith("51") ? d.slice(2) : d;
+  return `+51 ${local.replace(/(\d{3})(?=\d)/g, "$1 ")}`;
 }
 
 export function mailtoHref(): string {
