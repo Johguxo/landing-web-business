@@ -42,10 +42,17 @@ export const site = {
     title: `${name} | Soluciones digitales y automatización de procesos`,
     description:
       "Automatizamos y conectamos ventas, inventario, compras y finanzas con las herramientas que ya usas. Descubre en 30 minutos qué automatizar primero.",
-    /** Texto corto que acompaña al nombre en la imagen para compartir (og-image.png). */
-    ogTagline: "Tu empresa corre en Excel y WhatsApp. Hagamos que corra sola.",
-    /** Línea inferior de la imagen para compartir. */
-    ogFooter: "Soluciones digitales · linkus.pe",
+    /** Frase de valor bajo el logo en la imagen para compartir (og-image.png). Una línea corta. */
+    ogValue: "Automatizamos y conectamos tu operación",
+    /** Dominio que aparece al pie de la imagen para compartir. */
+    ogDomain: "linkus.pe",
+    /** Texto alternativo de la imagen para compartir. */
+    ogImageAlt: `Logo de ${name}: soluciones digitales para automatizar y conectar tu operación`,
+    /**
+     * Verificación de Google Search Console (opcional): el código del método "Etiqueta HTML",
+     * solo el valor de content="...". Vacío = no se agrega.
+     */
+    googleVerification: "",
   },
 
   /**

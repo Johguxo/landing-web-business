@@ -12,6 +12,43 @@ const { noindex = false } = Astro.props;
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const ogImage = new URL("/og-image.png", site.url).href;
 const { title, description } = site.seo;
+
+// Datos estructurados: ayudan a Google a mostrar el logo y vincular a LinkUs con sus fundadores y perfiles.
+const sameAs = [site.contact.linkedin].filter(Boolean);
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${site.url}/#organization`,
+      name: site.name,
+      slogan: site.tagline,
+      url: `${site.url}/`,
+      logo: new URL("/logo.png", site.url).href,
+      image: ogImage,
+      description,
+      email: site.contact.email,
+      telephone: `+${site.contact.whatsapp.replace(/\D/g, "")}`,
+      address: { "@type": "PostalAddress", addressLocality: "Lima", addressCountry: "PE" },
+      areaServed: { "@type": "Country", name: "Perú" },
+      ...(sameAs.length ? { sameAs } : {}),
+      founder: site.team.people.map((p) => ({
+        "@type": "Person",
+        name: p.name,
+        jobTitle: p.role.split(" · ")[0],
+        ...(p.linkedin ? { sameAs: [p.linkedin] } : {}),
+      })),
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${site.url}/#website`,
+      name: site.name,
+      url: `${site.url}/`,
+      inLanguage: "es-PE",
+      publisher: { "@id": `${site.url}/#organization` },
+    },
+  ],
+};
 ---
 
 <!doctype html>
@@ -23,6 +60,7 @@ const { title, description } = site.seo;
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex" />}
+    {site.seo.googleVerification && <meta name="google-site-verification" content={site.seo.googleVerification} />}
     <meta name="theme-color" content="#0E1B2E" />
 
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
@@ -40,7 +78,8 @@ const { title, description } = site.seo;
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
-    <meta property="og:image:alt" content={`${site.name}: ${site.seo.ogTagline}`} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content={site.seo.ogImageAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
@@ -48,6 +87,8 @@ const { title, description } = site.seo;
 
     <Font cssVariable="--font-sora" preload={[{ weight: 700 }]} />
     <Font cssVariable="--font-plex" preload={[{ weight: 400 }]} />
+
+    {!noindex && <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />}
 
     <Analytics />
   </head>

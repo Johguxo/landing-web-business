@@ -71,41 +71,61 @@ export async function iconPng(size: number): Promise<Buffer> {
   return sharp(Buffer.from(markSvg({ size }))).png().toBuffer();
 }
 
+/** Texto con espaciado entre letras (tracking), letra por letra. */
+function trackedPath(font: opentype.Font, text: string, x: number, y: number, size: number, tracking: number, fill: string) {
+  let cx = x;
+  const parts: string[] = [];
+  for (const ch of text) {
+    parts.push(pathData(font.getPath(ch, cx, y, size)));
+    cx += font.getAdvanceWidth(ch, size) + tracking;
+  }
+  return { svg: `<path d="${parts.join(" ")}" fill="${fill}"/>`, width: cx - x - tracking };
+}
+
+/**
+ * Imagen para compartir (1200×630). El logo va grande y centrado porque WhatsApp a veces
+ * muestra la vista previa como miniatura cuadrada recortando el centro: así el logo siempre se ve.
+ */
 export async function ogImagePng(): Promise<Buffer> {
   const W = 1200;
   const H = 630;
-  const pad = 80;
   const bold = loadFont("Sora-Bold.ttf");
   const regular = loadFont("Sora-Regular.ttf");
 
-  const name = textPath(bold, site.name, { x: pad + 76, y: pad + 30, size: 42, fill: PAPER });
+  // Logotipo: símbolo + nombre, con el subtítulo debajo del nombre.
+  const markSize = 150;
+  const gap = 30;
+  const nameSize = 104;
+  const subSize = 23;
+  const subTracking = 4;
+  const nameW = bold.getAdvanceWidth(site.name, nameSize);
+  // El ancho del logotipo es el del texto más ancho (nombre o subtítulo), para centrarlo bien.
+  const subW = trackedPath(regular, site.tagline.toUpperCase(), 0, 0, subSize, subTracking, MUTED).width;
+  const lockupW = markSize + gap + Math.max(nameW, subW + 4);
+  const lockupX = Math.round((W - lockupW) / 2);
+  const markY = 130;
+  const nameX = lockupX + markSize + gap;
+  const name = textPath(bold, site.name, { x: nameX, y: markY + 98, size: nameSize, fill: PAPER });
+  const sub = trackedPath(regular, site.tagline.toUpperCase(), nameX + 4, markY + 140, subSize, subTracking, MUTED);
 
-  // Titular: reduce el tamaño si el texto es largo, para que quepa en 3 líneas.
-  let size = 68;
-  let tagline = textPath(bold, site.seo.ogTagline, { x: pad, y: 0, size, maxWidth: W - pad * 2, lineHeight: 1.18, fill: PAPER });
-  while (tagline.lines > 3 && size > 40) {
-    size -= 4;
-    tagline = textPath(bold, site.seo.ogTagline, { x: pad, y: 0, size, maxWidth: W - pad * 2, lineHeight: 1.18, fill: PAPER });
-  }
-  const blockH = size * 1.18 * (tagline.lines - 1) + size;
-  const top = Math.round((H - blockH) / 2 + size * 0.85);
-  tagline = textPath(bold, site.seo.ogTagline, { x: pad, y: top, size, maxWidth: W - pad * 2, lineHeight: 1.18, fill: PAPER });
+  // Frase de valor centrada debajo del logotipo.
+  const valueSize = 28;
+  const valueW = regular.getAdvanceWidth(site.seo.ogValue, valueSize);
+  const value = textPath(regular, site.seo.ogValue, { x: Math.round((W - valueW) / 2), y: 452, size: valueSize, fill: PAPER });
 
-  const footer = textPath(regular, site.seo.ogFooter, {
-    x: pad + 120,
-    y: H - pad + 2,
-    size: 24,
-    fill: MUTED,
-  });
+  const domainSize = 26;
+  const domainW = bold.getAdvanceWidth(site.seo.ogDomain, domainSize);
+  const domain = textPath(bold, site.seo.ogDomain, { x: Math.round((W - domainW) / 2), y: 548, size: domainSize, fill: AMBER });
 
   const svg = `
 <svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   <rect width="${W}" height="${H}" fill="${INK}"/>
-  <g transform="translate(${pad - 2} ${pad - 26})">${markInner("light")}</g>
+  <g transform="translate(${lockupX} ${markY}) scale(${markSize / 64})">${markInner("light")}</g>
   ${name.svg}
-  ${tagline.svg}
-  <rect x="${pad}" y="${H - pad - 6}" width="96" height="6" rx="3" fill="${AMBER}"/>
-  ${footer.svg}
+  ${sub.svg}
+  <rect x="${W / 2 - 40}" y="368" width="80" height="5" rx="2.5" fill="${AMBER}"/>
+  ${value.svg}
+  ${domain.svg}
 </svg>`;
 
   return sharp(Buffer.from(svg)).png().toBuffer();

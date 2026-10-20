@@ -78,6 +78,24 @@ Con la analítica activa, los clics de contacto se registran como eventos: `clic
 3. Las rutas antiguas (`/registro`, `/login`, `/cliente/...`, `/proveedor/...`) redirigen al inicio con `vercel.json`; en Netlify, con `public/_redirects`.
 4. Actualiza la descripción de la página de LinkedIn para que coincida con el nuevo mensaje.
 
+### Vista previa al compartir (WhatsApp, LinkedIn)
+
+La imagen `og-image.png` lleva el logo grande y centrado: WhatsApp a veces muestra solo un recorte cuadrado del centro, y así el logo siempre se ve. El texto sale de `seo.ogValue` y `seo.ogDomain`.
+
+WhatsApp y LinkedIn **guardan en caché** la vista previa de cada enlace. Si cambias la imagen o el texto:
+- **LinkedIn:** pega la URL en el [Post Inspector](https://www.linkedin.com/post-inspector/) para que la vuelva a leer.
+- **WhatsApp:** no tiene herramienta para refrescar. Comparte una variante de la URL, por ejemplo `https://www.linkus.pe/?v=2`, y espera a que cargue la vista previa antes de enviar.
+
+### Google (Search Console)
+
+1. Entra a [Google Search Console](https://search.google.com/search-console) y agrega la propiedad **Dominio** `linkus.pe`.
+2. Google te da un registro **TXT**. Agrégalo en Vercel → **Domains → linkus.pe → DNS Records** (tipo TXT, nombre `@`).
+   - Alternativa: elige **Prefijo de URL** `https://www.linkus.pe/` con el método **Etiqueta HTML**, copia el valor de `content="..."` en `seo.googleVerification` de `site.ts` y publica.
+3. Ya verificado, ve a **Sitemaps** y envía `sitemap-index.xml`.
+4. En **Inspección de URLs**, pega `https://www.linkus.pe/` y pide **Solicitar indexación** para acelerar.
+
+La página ya incluye datos estructurados (Organization) con el logo (`/logo.png`), el contacto y los perfiles de LinkedIn de los socios.
+
 ### Imagen para redes y favicon
 
 `og-image.png`, `favicon.png` y `apple-touch-icon.png` se generan automáticamente en cada build a partir del nombre y la frase de `site.ts`. El código está en `src/lib/images.ts`. El logo (dos engranajes unidos por un eslabón) está en `src/lib/logo.ts`, que es la única fuente: si lo cambias ahí, se actualizan el header, el footer, el favicon y la imagen para redes.
