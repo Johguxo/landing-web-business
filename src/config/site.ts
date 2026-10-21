@@ -24,7 +24,8 @@ export const site = {
   url: "https://www.linkus.pe",
 
   contact: {
-    email: "linkusempresarial@gmail.com",
+    /** Correo de contacto: Erick gestiona las solicitudes. */
+    email: "erick.villanueva@linkus.pe",
     /** Número de WhatsApp con código de país, solo dígitos. Ej: 51987654321 */
     whatsapp: "51954604517",
     /** Mensaje que aparece escrito al abrir WhatsApp. */
